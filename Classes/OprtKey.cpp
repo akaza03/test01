@@ -9,7 +9,7 @@ OprtKey::~OprtKey()
 {
 }
 
-cocos2d::EventListener * OprtKey::moveEv(cocos2d::Sprite *sprite, int speed)
+cocos2d::EventListener * OprtKey::oprtInit(cocos2d::Sprite *sprite, int speed)
 {
 	auto listener = cocos2d::EventListenerKeyboard::create();
 	listener->onKeyPressed = [sprite,speed](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* keyEvent)
@@ -40,7 +40,7 @@ cocos2d::EventListener * OprtKey::moveEv(cocos2d::Sprite *sprite, int speed)
 	return listener;
 }
 
-cocos2d::EventListener * OprtKey::moveEv(cocos2d::Sprite * sprite, int speed, Character *chara)
+cocos2d::EventListener * OprtKey::oprtInit(cocos2d::Sprite * sprite, int speed, Character *chara)
 {
 	auto listener = cocos2d::EventListenerKeyboard::create();
 
@@ -81,13 +81,3 @@ cocos2d::EventListener * OprtKey::moveEv(cocos2d::Sprite * sprite, int speed, Ch
 
 	return listener;
 }
-
-void OprtKey::CharaMove(Character *chara, int speed)
-{
-}
-
-void OprtKey::SetScene(cocos2d::Scene * scene)
-{
-	nowScene = scene;
-}
-

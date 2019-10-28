@@ -24,8 +24,6 @@
 
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"
-#include "OprtKey.h"
-#include "OprtTouch.h"
 
 USING_NS_CC;
 
@@ -134,16 +132,6 @@ bool GameScene::init()
 		BGSP->setPosition(Vec2(BGSP->getContentSize().width * i, 0));
 		spNode->addChild(BGSP);
 	}
-
-	////	プラットフォームによって操作方法を変える
-	//if ((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX))
-	//{
-	//	_oprtState = new OprtKey();
-	//}
-	//else
-	{
-		_oprtState = new OprtTouch();
-	}
 	
 	//	プレイヤーの作成
 	auto player = Player::create();
@@ -164,7 +152,7 @@ bool GameScene::init()
 		}
 	}
 
-	player->SetInit("image/Sprites/player/player-idle/player-idle-1.png", DIR::RIGHT, Ppos, 5);
+	player->SetInit("image/Sprites/player/player-idle/player-idle-1.png", DIR::RIGHT, Ppos, 5, this);
 	CharaLayer->addChild(player, 0);
 
 #ifdef _DEBUG
@@ -179,9 +167,6 @@ bool GameScene::init()
 	DBLayer->addChild(DBBox,1,"DBBox");
 	player->SetDBBox(DBBox);
 #endif // _DEBUG
-	
-	_oprtState->SetScene(this);
-	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_oprtState->moveEv(player, player->GetSpeed(),player), this);
     
 	this->scheduleUpdate();
 	return true;

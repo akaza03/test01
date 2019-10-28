@@ -1,6 +1,9 @@
 #pragma once
 #include "cocos2d.h"
 #include "AnimManager.h"
+#include "OprtState.h"
+
+class OprtState;
 
 //	アニメーションのタイプ
 enum AnimState
@@ -41,7 +44,7 @@ public:
 	virtual ~Character();
 	virtual void update(float d) = 0;
 
-	void SetInit(std::string ImagePass,DIR stdir, cocos2d::Vec2 pos, int speed);
+	void SetInit(std::string ImagePass,DIR stdir, cocos2d::Vec2 pos, int speed, cocos2d::Scene *scene);
 
 	void MoveAction();
 	//	アニメーションのステートのGetSet
@@ -61,6 +64,8 @@ public:
 
 protected:
 	float Gy;								//	重力用
+
+	OprtState *_oprtState;
 
 	AnimState state;
 	AnimState oldState;

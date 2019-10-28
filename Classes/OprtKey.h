@@ -1,4 +1,5 @@
 #pragma once
+
 #include "OprtState.h"
 
 class OprtKey
@@ -7,9 +8,7 @@ class OprtKey
 public:
 	OprtKey();
 	~OprtKey();
-	cocos2d::EventListener* moveEv(cocos2d::Sprite *sprite, int speed);
-	cocos2d::EventListener* moveEv(cocos2d::Sprite *sprite, int speed, Character *chara);
-	void CharaMove(Character *chara, int speed);
-	void SetScene(cocos2d::Scene *scene);
+	cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed);								//	キャラクターではないオブジェクト用
+	cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed, Character *chara);				//	キャラクター用
 };
 

@@ -26,7 +26,6 @@
 #define __GAME_SCENE_H__
 
 #include "cocos2d.h"
-#include "OprtState.h"
 #include "Player.h"
 
 enum LayerNumber
@@ -53,8 +52,6 @@ public:
 	cocos2d::Sprite *icon;
 
 private:
-	OprtState * _oprtState;
-
 	cocos2d::Layer * BGLayer;				//	バックグラウンド用レイヤー
 	cocos2d::Layer * CharaLayer;			//	キャラクター用レイヤー
 	cocos2d::Layer * FGLayer;				//	フロントグラウンド用レイヤー

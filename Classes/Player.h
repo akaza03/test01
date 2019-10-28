@@ -13,6 +13,6 @@ public:
 	void SetDBBox(Sprite* sp);
 private:
 	Sprite *box;
-	//	衝突判定用(updateで呼び出す)
-	void CheckCol();
+	void CheckCol();																//	衝突判定用(updateで呼び出す)
+	int GetTile(cocos2d::Vec2 _pos, cocos2d::TMXLayer *_layer);						//	代入した座標のタイルを返す
 };

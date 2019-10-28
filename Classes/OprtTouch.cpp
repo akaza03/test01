@@ -11,7 +11,7 @@ OprtTouch::~OprtTouch()
 {
 }
 
-cocos2d::EventListener * OprtTouch::moveEv(cocos2d::Sprite *sprite, int speed)
+cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite *sprite, int speed)
 {
 	//	シングルタッチ
 	auto listener = cocos2d::EventListenerTouchOneByOne::create();
@@ -28,11 +28,6 @@ cocos2d::EventListener * OprtTouch::moveEv(cocos2d::Sprite *sprite, int speed)
 
 		StartTouchPos = touch->getLocation();
 		NowTouchPos = StartTouchPos;
-
-		//	開始位置に目印を作成
-		StartSP = cocos2d::Sprite::create("CloseNormal.png");
-		StartSP->setPosition(StartTouchPos);
-		nowScene->addChild(StartSP);
 
 		return true;
 	};
@@ -57,7 +52,7 @@ cocos2d::EventListener * OprtTouch::moveEv(cocos2d::Sprite *sprite, int speed)
 	return listener;
 }
 
-cocos2d::EventListener * OprtTouch::moveEv(cocos2d::Sprite * sprite, int speed, Character *chara)
+cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite * sprite, int speed, Character *chara)
 {
 	//	シングルタッチ
 	auto listener = cocos2d::EventListenerTouchOneByOne::create();
@@ -67,6 +62,7 @@ cocos2d::EventListener * OprtTouch::moveEv(cocos2d::Sprite * sprite, int speed, 
 
 	listener->onTouchBegan = [this](cocos2d::Touch* touch, cocos2d::Event* event)->bool
 	{
+		auto nowScene = cocos2d::Director::getInstance()->getRunningScene();
 		OldTouchPos = NowTouchPos;
 
 		BackOldPos = OldTouchPos;
@@ -76,7 +72,7 @@ cocos2d::EventListener * OprtTouch::moveEv(cocos2d::Sprite * sprite, int speed, 
 		NowTouchPos = StartTouchPos;
 
 		//	開始位置に目印を作成
-		StartSP = cocos2d::Sprite::create("CloseNormal.png");
+		auto StartSP = cocos2d::Sprite::create("CloseNormal.png");
 		StartSP->setPosition(StartTouchPos);
 		nowScene->addChild(StartSP,0,"touchIcon");
 
@@ -98,6 +94,7 @@ cocos2d::EventListener * OprtTouch::moveEv(cocos2d::Sprite * sprite, int speed, 
 
 	listener->onTouchEnded = [chara, this](cocos2d::Touch* touch, cocos2d::Event* event)->bool
 	{
+		auto nowScene = cocos2d::Director::getInstance()->getRunningScene();
 		nowScene->removeChildByName("touchIcon");
 		OldTouchPos = NowTouchPos;
 		chara->SetState(AnimState::IDLE);
@@ -158,7 +155,3 @@ void OprtTouch::CharaMove(Character *chara, int speed)
 	}
 }
 
-void OprtTouch::SetScene(cocos2d::Scene * scene)
-{
-	nowScene = scene;
-}
