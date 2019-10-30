@@ -174,7 +174,6 @@ bool GameScene::init()
 
 void GameScene::update(float d)
 {
-	//_oprtState->update(player, player->GetSpeed());
 }
 
 void GameScene::menuCloseCallback(Ref* pSender)

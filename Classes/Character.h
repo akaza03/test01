@@ -33,8 +33,13 @@ enum DIR
 {
 	LEFT,
 	RIGHT,
+	UP,
+	DOWN,
 	DIR_MAX
 };
+
+using spPointer = bool (*)(cocos2d::Sprite);
+
 
 class Character
 	:public cocos2d::Sprite
@@ -47,35 +52,50 @@ public:
 	void SetInit(std::string ImagePass,DIR stdir, cocos2d::Vec2 pos, int speed, cocos2d::Scene *scene);
 
 	void MoveAction();
-	//	アニメーションのステートのGetSet
-	AnimState GetState();
+	
+	AnimState GetState();															//	アニメーションのステートのGetSet
 	void SetState(AnimState st);
-	//	向きのGetSet
-	DIR GetDir();
+	
+	DIR GetDir();																	//	キャラクターの向きのGetSet
 	void SetDir(DIR dir);
-	//	スピードのGetSet
+	
+	int GetSpeed();																	//	スピードのGetSet
 	void SetSpeed(int sp);
-	int GetSpeed();
 
-	void SetMoveFlag(bool flag);
-	//	移動方向のGetSet
+	bool GetMoveFlagX();															//	X座標を移動中かどうかのGetSet
+	void SetMoveFlagX(bool flag);
+
+	bool GetMoveFlagY();															//	Y座標を移動中かどうかのGetSet
+	void SetMoveFlagY(bool flag);
+
+	cocos2d::Vec2 GetMovePos();														//	移動方向のGetSet
 	void SetMovePosX(float pos);
 	void SetMovePosY(float pos);
 
+	void SetJumpStart(bool flag);													//	ジャンプ開始時のSet
+
 protected:
-	float Gy;								//	重力用
+	Sprite *box;
+	void CheckCol();																//	衝突判定用(updateで呼び出す)
+	int GetTile(cocos2d::Vec2 _pos, cocos2d::TMXLayer *_layer);						//	代入した座標のタイルを返す
+
+	float Gy;																		//	重力用
 
 	OprtState *_oprtState;
 
 	AnimState state;
 	AnimState oldState;
 	int speed;
-	bool moveFlag;
-	cocos2d::Vec2 movePos;					//	指を離すまで移動するための移動方向
-	cocos2d::Vec2 colMovePos;				//	当たり判定を付与した最終的なmovePos
+	bool moveFlagX;																	//	キャラクターがX座標を移動中かどうか
+	bool moveFlagY;																	//	キャラクターがY座標を移動中がどうか
+	bool JumpStart;																	//	ジャンプ開始時のフラグ
+	cocos2d::Vec2 movePos;															//	指を離すまで移動するための移動方向
 
 	DIR charaDir;
 	DIR startDir;
 	DIR OldDir;
+
+	
+	std::map<spPointer, spPointer> act;												//	アクションの管理用
 };
 

@@ -85,7 +85,7 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite * sprite, int speed
 		OldTouchPos = NowTouchPos;
 		NowTouchPos = touch->getLocation();
 		chara->SetState(AnimState::RUN);
-		chara->SetMoveFlag(true);
+		chara->SetMoveFlagX(true);
 
 		CharaMove(chara, speed);
 
@@ -98,7 +98,7 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite * sprite, int speed
 		nowScene->removeChildByName("touchIcon");
 		OldTouchPos = NowTouchPos;
 		chara->SetState(AnimState::IDLE);
-		chara->SetMoveFlag(false);
+		chara->SetMoveFlagX(false);
 		return true;
 	};
 
@@ -131,27 +131,43 @@ void OprtTouch::SetMove(cocos2d::Touch* touch, cocos2d::Sprite *sprite, int Cspe
 
 void OprtTouch::CharaMove(Character *chara, int speed)
 {
-	//if (moveFlag)
+	float _ang = 0;
+	//	スワイプ中に止まっても移動を続けるように
+
+	_ang = static_cast<float>(atan2(StartTouchPos.y - NowTouchPos.y, StartTouchPos.x - NowTouchPos.x));
+
+	charaPosX = - cosf(_ang) * speed;
+	charaPosY = - sinf(_ang) * speed;
+
+	chara->SetMovePosX(charaPosX);
+	if (charaPosY > 0)
 	{
-		float _ang = 0;
-		//	スワイプ中に止まっても移動を続けるように
-
-		_ang = static_cast<float>(atan2(StartTouchPos.y - NowTouchPos.y, StartTouchPos.x - NowTouchPos.x));
-
-		charaPosX = chara->getPosition().x - cosf(_ang) * speed;
-		charaPosY = chara->getPosition().y - sinf(_ang) * speed;
-
-		chara->SetMovePosX(-cosf(_ang) * speed);
-		chara->SetMovePosY(-sinf(_ang) * speed);
-
-		if (chara->getPosition().x < charaPosX)
-		{
-			chara->SetDir(DIR::RIGHT);
-		}
-		if (chara->getPosition().x > charaPosX)
-		{
-			chara->SetDir(DIR::LEFT);
-		}
+		chara->SetMoveFlagY(true);
+		chara->SetJumpStart(true);
+		chara->SetMovePosY(charaPosY);
 	}
+	else
+	{
+		chara->SetMovePosY(0);
+	}
+
+
+	if (charaPosX > 0)
+	{
+		chara->SetDir(DIR::RIGHT);
+	}
+	if (charaPosX < 0)
+	{
+		chara->SetDir(DIR::LEFT);
+	}
+
+	//if (chara->getPosition().x < charaPosX)
+	//{
+	//	chara->SetDir(DIR::RIGHT);
+	//}
+	//if (chara->getPosition().x > charaPosX)
+	//{
+	//	chara->SetDir(DIR::LEFT);
+	//}
 }
 
