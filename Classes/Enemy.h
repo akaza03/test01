@@ -8,6 +8,9 @@ public:
 	Enemy();
 	~Enemy();
 	void update(float d);
+	
 	CREATE_FUNC(Enemy);
+private:
+	void AnimStateUpdate();
 };
 

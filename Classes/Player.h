@@ -12,6 +12,5 @@ public:
 
 	void SetDBBox(Sprite* sp);
 private:
-	void moveUpdate();
-	void AnimStateUpdate();
+	void AnimStateUpdate();					//	アニメーションの更新
 };

@@ -24,7 +24,7 @@ enum AnimState
 enum CharaType
 {
 	PLAYER,
-	ENEMY1,
+	ENEMY,
 	CHARA_MAX
 };
 
@@ -51,8 +51,6 @@ public:
 
 	void SetInit(std::string ImagePass,DIR stdir, cocos2d::Vec2 pos, int speed, cocos2d::Scene *scene);
 
-	void MoveAction();
-	
 	AnimState GetState();															//	アニメーションのステートのGetSet
 	void SetState(AnimState st);
 	
@@ -75,27 +73,30 @@ public:
 	void SetJumpStart(bool flag);													//	ジャンプ開始時のSet
 
 protected:
-	Sprite *box;
 	void CheckCol();																//	衝突判定用(updateで呼び出す)
 	int GetTile(cocos2d::Vec2 _pos, cocos2d::TMXLayer *_layer);						//	代入した座標のタイルを返す
 
-	float Gy;																		//	重力用
+	void moveUpdate();																//	移動の更新
+	void dirUpdate();																//	向きの更新
 
-	OprtState *_oprtState;
+	Sprite *_box;																	//	当たり判定用のBOX
+	float _Gravity;																	//	重力
+	cocos2d::Vec2 _oldPos;															//	1フレーム前の座標
+	OprtState *_oprtState;															//	操作制御
+	AnimState _state;																//	現在のアニメーション
+	AnimState _oldState;															//	1フレーム前のアニメーション
 
-	AnimState state;
-	AnimState oldState;
-	int speed;
-	bool moveFlagX;																	//	キャラクターがX座標を移動中かどうか
-	bool moveFlagY;																	//	キャラクターがY座標を移動中がどうか
-	bool JumpStart;																	//	ジャンプ開始時のフラグ
-	cocos2d::Vec2 movePos;															//	指を離すまで移動するための移動方向
+	bool _moveFlagX;																//	キャラクターがX座標を移動中かどうか
+	bool _moveFlagY;																//	キャラクターがY座標を移動中がどうか
+	bool _JumpStart;																//	ジャンプ開始時のフラグ
 
-	DIR charaDir;
-	DIR startDir;
-	DIR OldDir;
+	cocos2d::Vec2 _movePos;															//	移動時に現在の座標に加算する
+	int _speed;																		//	移動スピード
+
+	DIR _charaDir;
+	DIR _startDir;
+	DIR _oldDir;
 
 	
 	std::map<spPointer, spPointer> act;												//	アクションの管理用
 };
-

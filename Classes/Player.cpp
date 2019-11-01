@@ -2,11 +2,9 @@
 
 Player::Player()
 {
-	//Sprite::create("image/Sprites/player/player-idle/player-idle-1.png");
-
-	state = AnimState::IDLE;
-	oldState = AnimState::STATE_MAX;
-	movePos = cocos2d::Vec2(0, 0);
+	_state = AnimState::IDLE;
+	_oldState = AnimState::STATE_MAX;
+	_movePos = cocos2d::Vec2(0, 0);
 
 	this->scheduleUpdate();
 }
@@ -17,25 +15,23 @@ Player::~Player()
 
 void Player::update(float d)
 {
+	//	当たり判定処理
 	CheckCol();
 
+	//	重力を座標に加算する
+	setPosition(getPosition().x, getPosition().y + _Gravity);
+
+	//	デバッグ用Boxの座標設定
+#ifdef _DEBUG
+	_box->setTextureRect(cocos2d::Rect(getPosition().x, getPosition().y, getContentSize().width, getContentSize().height));
+	_box->setPosition(getPosition());
+#endif // _DEBUG
+
+	//	方向の更新
+	dirUpdate();
+	//	移動の更新
 	moveUpdate();
-
-	//	プレイヤーの向きの更新
-	if (charaDir != OldDir)
-	{
-		if (charaDir != startDir)
-		{
-			setFlippedX(true);
-		}
-		else
-		{
-			setFlippedX(false);
-		}
-		
-	}
-	OldDir = charaDir;
-
+	//	アニメーションの更新
 	AnimStateUpdate();
 }
 
@@ -43,44 +39,31 @@ void Player::SetDBBox(Sprite* sp)
 {
 #ifdef _DEBUG
 	//	当たり判定用の四角描画
-	box = sp;
+	_box = sp;
 #endif // _DEBUG
 }
 
-void Player::moveUpdate()
-{
-	JumpStart = false;
-	//	移動
-	if (moveFlagX)
-	{
-		setPosition(getPosition().x + movePos.x,getPosition().y);
-	}
-	if (moveFlagY)
-	{
-		setPosition(getPosition().x, getPosition().y + movePos.y);
-	}
-
-	//	アニメーションの更新
-	if (moveFlagY)
-	{
-		state = AnimState::JUMP;
-	}
-	else if (moveFlagX)
-	{
-		state = AnimState::RUN;
-	}
-	else
-	{
-		state = AnimState::IDLE;
-	}
-}
 
 void Player::AnimStateUpdate()
 {
-	//	アニメーションの更新
-	if (state != oldState)
+	//	AnimStateの更新
+	if (_moveFlagY)
 	{
-		switch (state)
+		_state = AnimState::JUMP;
+	}
+	else if (_moveFlagX)
+	{
+		_state = AnimState::RUN;
+	}
+	else
+	{
+		_state = AnimState::IDLE;
+	}
+
+	//	アニメーションの更新
+	if (_state != _oldState)
+	{
+		switch (_state)
 		{
 		case AnimState::IDLE:
 			lpAnimManager.AnimRun(this, "p_idle");
@@ -112,7 +95,7 @@ void Player::AnimStateUpdate()
 			break;
 		}
 	}
-	oldState = state;
+	_oldState = _state;
 }
 
 

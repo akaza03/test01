@@ -112,8 +112,8 @@ void OprtTouch::SetMove(cocos2d::Touch* touch, cocos2d::Sprite *sprite, int Cspe
 
 	int speed = Cspeed;
 
-	charaPosX = sprite->getPosition().x - cosf(_ang) * speed;
-	charaPosY = sprite->getPosition().y - sinf(_ang) * speed;
+	auto charaPosX = sprite->getPosition().x - cosf(_ang) * speed;
+	auto charaPosY = sprite->getPosition().y - sinf(_ang) * speed;
 
 	//	移動量が0でなければ保存
 	if (OldTouchPos.x != NowTouchPos.x)
@@ -132,12 +132,12 @@ void OprtTouch::SetMove(cocos2d::Touch* touch, cocos2d::Sprite *sprite, int Cspe
 void OprtTouch::CharaMove(Character *chara, int speed)
 {
 	float _ang = 0;
-	//	スワイプ中に止まっても移動を続けるように
 
+	//	スワイプ中に止まっても移動を続けるように
 	_ang = static_cast<float>(atan2(StartTouchPos.y - NowTouchPos.y, StartTouchPos.x - NowTouchPos.x));
 
-	charaPosX = - cosf(_ang) * speed;
-	charaPosY = - sinf(_ang) * speed;
+	auto charaPosX = - cosf(_ang) * speed;
+	auto charaPosY = - sinf(_ang) * speed;
 
 	chara->SetMovePosX(charaPosX);
 	if (charaPosY > 0)
@@ -151,7 +151,6 @@ void OprtTouch::CharaMove(Character *chara, int speed)
 		chara->SetMovePosY(0);
 	}
 
-
 	if (charaPosX > 0)
 	{
 		chara->SetDir(DIR::RIGHT);
@@ -160,14 +159,5 @@ void OprtTouch::CharaMove(Character *chara, int speed)
 	{
 		chara->SetDir(DIR::LEFT);
 	}
-
-	//if (chara->getPosition().x < charaPosX)
-	//{
-	//	chara->SetDir(DIR::RIGHT);
-	//}
-	//if (chara->getPosition().x > charaPosX)
-	//{
-	//	chara->SetDir(DIR::LEFT);
-	//}
 }
 

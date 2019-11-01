@@ -7,9 +7,9 @@
 
 Character::Character()
 {
-	moveFlagX = false;
-	moveFlagY = false;
-	Gy = 0;
+	_moveFlagX = false;
+	_moveFlagY = false;
+	_Gravity = 0;
 }
 
 
@@ -22,12 +22,13 @@ void Character::SetInit(std::string ImagePass, DIR stdir, cocos2d::Vec2 pos, int
 {
 	auto sprite = Sprite::create(ImagePass);
 
-	charaDir = stdir;
-	startDir = charaDir;
-	OldDir = charaDir;
+	_charaDir = stdir;
+	_startDir = _charaDir;
+	_oldDir = _charaDir;
+	_oldPos = pos;
 
 	setPosition(cocos2d::Vec2(pos.x + sprite->getContentSize().width / 2, pos.y));
-	this->speed = speed;
+	this->_speed = speed;
 
 	//	プラットフォームによって操作方法を変える
 	if ((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX))
@@ -45,80 +46,80 @@ void Character::SetInit(std::string ImagePass, DIR stdir, cocos2d::Vec2 pos, int
 
 AnimState Character::GetState()
 {
-	return state;
+	return _state;
 }
 
 void Character::SetState(AnimState st)
 {
-	state = st;
+	_state = st;
 }
 
 DIR Character::GetDir()
 {
-	return charaDir;
+	return _charaDir;
 }
 
 void Character::SetDir(DIR dir)
 {
-	charaDir = dir;
+	_charaDir = dir;
 }
 
 void Character::SetSpeed(int sp)
 {
-	speed = sp;
+	_speed = sp;
 }
 
 int Character::GetSpeed()
 {
-	return speed;
+	return _speed;
 }
 
 void Character::SetMoveFlagX(bool flag)
 {
-	moveFlagX = flag;
+	_moveFlagX = flag;
 }
 
 void Character::SetMoveFlagY(bool flag)
 {
-	moveFlagY = flag;
+	_moveFlagY = flag;
 }
 
 bool Character::GetMoveFlagX()
 {
-	return moveFlagX;
+	return _moveFlagX;
 }
 
 bool Character::GetMoveFlagY()
 {
-	return moveFlagY;
+	return _moveFlagY;
 }
 
 cocos2d::Vec2 Character::GetMovePos()
 {
-	return movePos;
+	return _movePos;
 }
 
 void Character::SetMovePosX(float pos)
 {
-	movePos.x = pos;
+	_movePos.x = pos;
 }
 
 void Character::SetMovePosY(float pos)
 {
-	movePos.y = pos;
+	_movePos.y = pos;
 }
 
 void Character::SetJumpStart(bool flag)
 {
-	JumpStart = flag;
+	_JumpStart = flag;
 }
 
 
 void Character::CheckCol()
 {
 	//	重力を加算する
-	float g = -0.05f;
-	Gy += g;
+	float gy = -0.05f;
+	_Gravity += gy;
 	bool GyFlag = false;
 
 	//	衝突用のレイヤーの取得
@@ -138,32 +139,28 @@ void Character::CheckCol()
 	if (tile != 0)
 	{
 		TRACE("下%d", tile);
-		Gy = 0;
-		if (!JumpStart)
+		_Gravity = 0;
+		if (!_JumpStart)
 		{
-			movePos.y = 0;
-			moveFlagY = false;
+			_movePos.y = 0;
+			_moveFlagY = false;
 		}
 
-		if (movePos.y <= 0)
+		if (_movePos.y <= 0)
 		{
-			movePos.y = 0;
+			_movePos.y = 0;
 		}
-	}
-	else
-	{
-		moveFlagY = true;
 	}
 	//	上
 	auto UpPos = cocos2d::Vec2(pos.x / layerMap->getMapTileSize().width, pos.y / layerMap->getMapTileSize().height - 1);
 	tile = GetTile(UpPos, layerMap);
 	if (tile != 0)
 	{
-		Gy = g * 10;
+		_Gravity = gy * 10;
 		TRACE("上%d", tile);
-		if (movePos.y > 0)
+		if (_movePos.y > 0)
 		{
-			movePos.y = 0;
+			_movePos.y = 0;
 		}
 	}
 	// 左
@@ -172,9 +169,9 @@ void Character::CheckCol()
 	if (tile != 0)
 	{ 
 		TRACE("左%d", tile);
-		if (movePos.x < 0)
+		if (_movePos.x < 0)
 		{
-			movePos.x = 0;
+			_movePos.x = 0;
 		}
 	}
 	//	右
@@ -183,21 +180,11 @@ void Character::CheckCol()
 	if (tile != 0)
 	{
 		TRACE("右%d", tile);
-		if (movePos.x > 0)
+		if (_movePos.x > 0)
 		{
-			movePos.x = 0;
+			_movePos.x = 0;
 		}
 	}
-
-	//	重力を座標に加算する
-	setPosition(getPosition().x, getPosition().y + Gy);
-
-	//	デバッグ用Boxの座標設定
-#ifdef _DEBUG
-	box->setTextureRect(cocos2d::Rect(getPosition().x, getPosition().y, getContentSize().width, getContentSize().height));
-	box->setPosition(getPosition());
-#endif // _DEBUG
-
 }
 
 int Character::GetTile(cocos2d::Vec2 _pos, cocos2d::TMXLayer *_layer)
@@ -210,4 +197,47 @@ int Character::GetTile(cocos2d::Vec2 _pos, cocos2d::TMXLayer *_layer)
 		return _layer->getTileGIDAt(_pos);
 	}
 	return 0;
+}
+
+void Character::moveUpdate()
+{
+
+	_JumpStart = false;
+	//	移動
+	if (_moveFlagX)
+	{
+		setPosition(getPosition().x + _movePos.x, getPosition().y);
+	}
+	if (_moveFlagY)
+	{
+		setPosition(getPosition().x, getPosition().y + _movePos.y);
+	}
+}
+
+void Character::dirUpdate()
+{
+	//	プレイヤーの向きの更新
+	if (_oldPos.x > getPosition().x)
+	{
+		_charaDir = DIR::LEFT;
+	}
+	else if (_oldPos.x < getPosition().x)
+	{
+		_charaDir = DIR::RIGHT;
+	}
+
+	_oldPos = getPosition();
+
+	if (_charaDir != _oldDir)
+	{
+		if (_charaDir != _startDir)
+		{
+			setFlippedX(true);
+		}
+		else
+		{
+			setFlippedX(false);
+		}
+	}
+	_oldDir = _charaDir;
 }

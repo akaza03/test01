@@ -20,10 +20,5 @@ private:
 	cocos2d::Vec2 OldTouchPos;																	//	1フレーム前のタッチ座標
 	cocos2d::Vec2 BackNowPos;																	//	NowTouchPos保存用
 	cocos2d::Vec2 BackOldPos;																	//	OldTouchPos保存用
-
-	float charaPosX;
-	float charaPosY;
-
-	bool moveFlag;
 };
 
