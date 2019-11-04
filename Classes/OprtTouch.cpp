@@ -21,13 +21,13 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite *sprite, int speed)
 
 	listener->onTouchBegan = [this](cocos2d::Touch* touch, cocos2d::Event* event)->bool
 	{
-		OldTouchPos = NowTouchPos;
+		_oldTouchPos = _nowTouchPos;
 
-		BackOldPos = OldTouchPos;
-		BackNowPos = NowTouchPos;
+		_backOldPos = _oldTouchPos;
+		_backNowPos = _nowTouchPos;
 
-		StartTouchPos = touch->getLocation();
-		NowTouchPos = StartTouchPos;
+		_startTouchPos = touch->getLocation();
+		_nowTouchPos = _startTouchPos;
 
 		return true;
 	};
@@ -35,8 +35,8 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite *sprite, int speed)
 	//	スワイプ移動時
 	listener->onTouchMoved = [sprite, speed,this](cocos2d::Touch* touch, cocos2d::Event* event)->bool
 	{
-		OldTouchPos = NowTouchPos;
-		NowTouchPos = touch->getLocation();
+		_oldTouchPos = _nowTouchPos;
+		_nowTouchPos = touch->getLocation();
 
 		SetMove(touch,sprite,speed);
 		return true;
@@ -44,7 +44,7 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite *sprite, int speed)
 
 	listener->onTouchEnded = [this](cocos2d::Touch* touch, cocos2d::Event* event)->bool
 	{
-		OldTouchPos = NowTouchPos;
+		_oldTouchPos = _nowTouchPos;
 		//moveFlag = false;
 		return true;
 	};
@@ -63,17 +63,17 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite * sprite, int speed
 	listener->onTouchBegan = [this](cocos2d::Touch* touch, cocos2d::Event* event)->bool
 	{
 		auto nowScene = cocos2d::Director::getInstance()->getRunningScene();
-		OldTouchPos = NowTouchPos;
+		_oldTouchPos = _nowTouchPos;
 
-		BackOldPos = OldTouchPos;
-		BackNowPos = NowTouchPos;
+		_backOldPos = _oldTouchPos;
+		_backNowPos = _nowTouchPos;
 
-		StartTouchPos = touch->getLocation();
-		NowTouchPos = StartTouchPos;
+		_startTouchPos = touch->getLocation();
+		_nowTouchPos = _startTouchPos;
 
 		//	開始位置に目印を作成
 		auto StartSP = cocos2d::Sprite::create("CloseNormal.png");
-		StartSP->setPosition(StartTouchPos);
+		StartSP->setPosition(_startTouchPos);
 		nowScene->addChild(StartSP,0,"touchIcon");
 
 		return true;
@@ -82,8 +82,8 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite * sprite, int speed
 	//	スワイプ移動時
 	listener->onTouchMoved = [sprite, speed, chara, this](cocos2d::Touch* touch, cocos2d::Event* event)->bool
 	{
-		OldTouchPos = NowTouchPos;
-		NowTouchPos = touch->getLocation();
+		_oldTouchPos = _nowTouchPos;
+		_nowTouchPos = touch->getLocation();
 		chara->SetState(AnimState::RUN);
 		chara->SetMoveFlagX(true);
 
@@ -96,7 +96,7 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite * sprite, int speed
 	{
 		auto nowScene = cocos2d::Director::getInstance()->getRunningScene();
 		nowScene->removeChildByName("touchIcon");
-		OldTouchPos = NowTouchPos;
+		_oldTouchPos = _nowTouchPos;
 		chara->SetState(AnimState::IDLE);
 		chara->SetMoveFlagX(false);
 		return true;
@@ -108,7 +108,7 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite * sprite, int speed
 void OprtTouch::SetMove(cocos2d::Touch* touch, cocos2d::Sprite *sprite, int Cspeed)
 {
 	float _ang;
-	_ang = static_cast<float>(atan2(StartTouchPos.y - NowTouchPos.y, StartTouchPos.x - NowTouchPos.x));
+	_ang = static_cast<float>(atan2(_startTouchPos.y - _nowTouchPos.y, _startTouchPos.x - _nowTouchPos.x));
 
 	int speed = Cspeed;
 
@@ -116,16 +116,16 @@ void OprtTouch::SetMove(cocos2d::Touch* touch, cocos2d::Sprite *sprite, int Cspe
 	auto charaPosY = sprite->getPosition().y - sinf(_ang) * speed;
 
 	//	移動量が0でなければ保存
-	if (OldTouchPos.x != NowTouchPos.x)
+	if (_oldTouchPos.x != _nowTouchPos.x)
 	{
-		BackOldPos.x = OldTouchPos.x;
-		BackNowPos.x = NowTouchPos.x;
+		_backOldPos.x = _oldTouchPos.x;
+		_backNowPos.x = _nowTouchPos.x;
 	}
 
-	if (OldTouchPos.y != NowTouchPos.y)
+	if (_oldTouchPos.y != _nowTouchPos.y)
 	{
-		BackOldPos.y = OldTouchPos.y;
-		BackNowPos.y = NowTouchPos.y;
+		_backOldPos.y = _oldTouchPos.y;
+		_backNowPos.y = _nowTouchPos.y;
 	}
 }
 
@@ -134,7 +134,7 @@ void OprtTouch::CharaMove(Character *chara, int speed)
 	float _ang = 0;
 
 	//	スワイプ中に止まっても移動を続けるように
-	_ang = static_cast<float>(atan2(StartTouchPos.y - NowTouchPos.y, StartTouchPos.x - NowTouchPos.x));
+	_ang = static_cast<float>(atan2(_startTouchPos.y - _nowTouchPos.y, _startTouchPos.x - _nowTouchPos.x));
 
 	auto charaPosX = - cosf(_ang) * speed;
 	auto charaPosY = - sinf(_ang) * speed;

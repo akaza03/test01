@@ -19,6 +19,9 @@
     <Filter Include="unit">
       <UniqueIdentifier>{d4a592df-3ce9-444a-aca9-d69f112d9b7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Action">
+      <UniqueIdentifier>{46160df4-f590-400e-9630-f27a0fdb3707}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,9 +45,6 @@
     <ClCompile Include="..\Classes\Character.cpp">
       <Filter>unit</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\AnimManager.cpp">
-      <Filter>unit</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\GameScene.cpp">
       <Filter>win32</Filter>
     </ClCompile>
@@ -56,6 +56,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\_DebugDispOut.cpp">
       <Filter>_DebugOut</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AnimManager.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\HitCheck.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Move.cpp">
+      <Filter>Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\KeyCheck.cpp">
+      <Filter>Action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,9 +92,6 @@
     <ClInclude Include="..\Classes\Player.h">
       <Filter>unit</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AnimManager.h">
-      <Filter>unit</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\GameScene.h">
       <Filter>win32</Filter>
     </ClInclude>
@@ -94,6 +103,24 @@
     </ClInclude>
     <ClInclude Include="..\Classes\_DebugDispOut.h">
       <Filter>_DebugOut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AnimManager.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\charaStruct.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HitCheck.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Move.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ActSet.h">
+      <Filter>Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\KeyCheck.h">
+      <Filter>Action</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

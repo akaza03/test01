@@ -1,45 +1,24 @@
 #pragma once
-#include "cocos2d.h"
+#include <functional>
+#include "ActSet.h"
 #include "AnimManager.h"
 #include "OprtState.h"
 
 class OprtState;
 
-//	アニメーションのタイプ
-enum AnimState
+//using spPointer = bool (*)(cocos2d::Sprite);
+using actionPoint = std::function<bool(cocos2d::Sprite&,struct CharaID&)>;
+
+//	キャラクターの情報用
+struct CharaID
 {
-	IDLE,
-	RUN,
-	RSHOT,
-	SHOTUP,
-	STAND,
-	JUMP,
-	CLING,
-	DUCK,
-	HURT,
-	STATE_MAX
+	cocos2d::Vec2 speed;													//	移動スピード
+	cocos2d::EventKeyboard::KeyCode key;									//	どのキーを押したら処理するのか(List)
+	AnimState anim;															//	現在のアニメーション
+	cocos2d::Point checkPoint;												//	当たり判定用
+	CharaType cType;														//	キャラクターのタイプ
+	//	次に呼ぶ関数
 };
-
-//	キャラクターのタイプ
-enum CharaType
-{
-	PLAYER,
-	ENEMY,
-	CHARA_MAX
-};
-
-//	向き
-enum DIR
-{
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN,
-	DIR_MAX
-};
-
-using spPointer = bool (*)(cocos2d::Sprite);
-
 
 class Character
 	:public cocos2d::Sprite
@@ -72,12 +51,17 @@ public:
 
 	void SetJumpStart(bool flag);													//	ジャンプ開始時のSet
 
+	CharaType GetCharaType();														//	キャラのタイプのGet
+
+	void SetDBBox(Sprite* sp);														//	デバッグ時の当たり判定用BoxのSet
+
 protected:
 	void CheckCol();																//	衝突判定用(updateで呼び出す)
 	int GetTile(cocos2d::Vec2 _pos, cocos2d::TMXLayer *_layer);						//	代入した座標のタイルを返す
 
-	void moveUpdate();																//	移動の更新
 	void dirUpdate();																//	向きの更新
+	void moveUpdate();																//	移動の更新
+	void AnimStateUpdate();															//	アニメーションの更新
 
 	Sprite *_box;																	//	当たり判定用のBOX
 	float _Gravity;																	//	重力
@@ -93,10 +77,21 @@ protected:
 	cocos2d::Vec2 _movePos;															//	移動時に現在の座標に加算する
 	int _speed;																		//	移動スピード
 
-	DIR _charaDir;
-	DIR _startDir;
-	DIR _oldDir;
+	DIR _charaDir;																	//	キャラクターの向き
+	DIR _startDir;																	//	ゲーム開始時の向き
+	DIR _oldDir;																	//	1フレーム前の向き
 
-	
-	std::map<spPointer, spPointer> act;												//	アクションの管理用
+	CharaType _cType;																//	キャラクターのタイプ
+
+
+
+	CharaID _charaID;														//	キャラクターの情報用
+	std::map<const char *,CharaID> _charaList;								//	キャラクターの情報用リスト
+	std::list<cocos2d::EventKeyboard::KeyCode> _keyList;					//	キー用のリスト
+
+	std::list<actionPoint> _actList;										//	アクションの管理用
+
+	actionPoint _act;
+
+	//bool(*_act)(cocos2d::Sprite&);
 };

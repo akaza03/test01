@@ -1,15 +1,27 @@
-#include "Character.h"
-
 #include "OprtKey.h"
 #include "OprtTouch.h"
 #include "_DebugConOut.h"
+#include "Character.h"
 
 
 Character::Character()
 {
+	_charaList.insert(std::make_pair("idle", _charaID));
+	_charaList.insert(std::make_pair("run", _charaID));
+	_charaList.insert(std::make_pair("pShot", _charaID));
+	_charaList.insert(std::make_pair("shotUp", _charaID));
+	_charaList.insert(std::make_pair("stand", _charaID));
+	_charaList.insert(std::make_pair("jump", _charaID));
+	_charaList.insert(std::make_pair("cling", _charaID));
+	_charaList.insert(std::make_pair("duck", _charaID));
+	_charaList.insert(std::make_pair("hurt", _charaID));
+
 	_moveFlagX = false;
 	_moveFlagY = false;
 	_Gravity = 0;
+
+	//_act = &HitCheck()(this);
+	_act = KeyCheck();
 }
 
 
@@ -114,6 +126,19 @@ void Character::SetJumpStart(bool flag)
 	_JumpStart = flag;
 }
 
+CharaType Character::GetCharaType()
+{
+	return _cType;
+}
+
+void Character::SetDBBox(Sprite * sp)
+{
+#ifdef _DEBUG
+	//	当たり判定用の四角描画
+	_box = sp;
+#endif // _DEBUG
+}
+
 
 void Character::CheckCol()
 {
@@ -199,21 +224,6 @@ int Character::GetTile(cocos2d::Vec2 _pos, cocos2d::TMXLayer *_layer)
 	return 0;
 }
 
-void Character::moveUpdate()
-{
-
-	_JumpStart = false;
-	//	移動
-	if (_moveFlagX)
-	{
-		setPosition(getPosition().x + _movePos.x, getPosition().y);
-	}
-	if (_moveFlagY)
-	{
-		setPosition(getPosition().x, getPosition().y + _movePos.y);
-	}
-}
-
 void Character::dirUpdate()
 {
 	//	プレイヤーの向きの更新
@@ -240,4 +250,43 @@ void Character::dirUpdate()
 		}
 	}
 	_oldDir = _charaDir;
+}
+
+void Character::moveUpdate()
+{
+
+	_JumpStart = false;
+	//	移動
+	if (_moveFlagX)
+	{
+		setPosition(getPosition().x + _movePos.x, getPosition().y);
+	}
+	if (_moveFlagY)
+	{
+		setPosition(getPosition().x, getPosition().y + _movePos.y);
+	}
+}
+
+void Character::AnimStateUpdate()
+{
+	//	AnimStateの更新
+	if (_moveFlagY)
+	{
+		_state = AnimState::JUMP;
+	}
+	else if (_moveFlagX)
+	{
+		_state = AnimState::RUN;
+	}
+	else
+	{
+		_state = AnimState::IDLE;
+	}
+
+	//	アニメーションの更新
+	if (_state != _oldState)
+	{
+		lpAnimManager.AnimRun(this, _state, _cType);
+	}
+	_oldState = _state;
 }

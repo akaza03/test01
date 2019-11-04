@@ -16,19 +16,18 @@ AnimManager::~AnimManager()
 void AnimManager::AnimationInit()
 {
 	std::string pass = "image/Sprites/player/";
-	animMap["p_idle"] = AnimationCreate(pass + "player-idle/player-idle.plist", 4, 0.5f, "player-idle-%i.png", true);
-	animMap["p_run"] = AnimationCreate(pass + "player-run/player-run.plist", 10, 0.1f, "player-run-%i.png", true);
-	animMap["p_runShot"] = AnimationCreate(pass + "player-run-shot/player-run-shot.plist", 10, 0.3f, "player-run-shot-%i.png", true);
-	animMap["p_shotUp"] = AnimationCreate(pass + "player-shoot-up/player-shoot-up.plist", 1, 1, "player-shoot-up-%i.png", true);
-	animMap["p_stand"] = AnimationCreate(pass + "player-stand/player-stand.plist", 3, 0.5f, "player-stand-%i.png", true);
-	animMap["p_jump"] = AnimationCreate(pass + "player-jump/player-jump.plist", 6, 0.5f, "player-jump-%i.png", true);
-	animMap["p_cling"] = AnimationCreate(pass + "player-cling/player-cling.plist", 1, 1, "player-cling-%i.png", true);
-	animMap["p_duck"] = AnimationCreate(pass + "player-duck/player-duck.plist", 1, 1, "player-duck-%i.png", true);
-	animMap["p_hurt"] = AnimationCreate(pass + "player-hurt/player-hurt.plist", 2, 1.0f, "player-hurt-%i.png", true);
+	_animMap["p_idle"] = AnimationCreate(pass + "player-idle/player-idle.plist", 4, 0.5f, "player-idle-%i.png", true);
+	_animMap["p_run"] = AnimationCreate(pass + "player-run/player-run.plist", 10, 0.1f, "player-run-%i.png", true);
+	_animMap["p_runShot"] = AnimationCreate(pass + "player-run-shot/player-run-shot.plist", 10, 0.3f, "player-run-shot-%i.png", true);
+	_animMap["p_shotUp"] = AnimationCreate(pass + "player-shoot-up/player-shoot-up.plist", 1, 1, "player-shoot-up-%i.png", true);
+	_animMap["p_stand"] = AnimationCreate(pass + "player-stand/player-stand.plist", 3, 0.5f, "player-stand-%i.png", true);
+	_animMap["p_jump"] = AnimationCreate(pass + "player-jump/player-jump.plist", 6, 0.5f, "player-jump-%i.png", true);
+	_animMap["p_cling"] = AnimationCreate(pass + "player-cling/player-cling.plist", 1, 1, "player-cling-%i.png", true);
+	_animMap["p_duck"] = AnimationCreate(pass + "player-duck/player-duck.plist", 1, 1, "player-duck-%i.png", true);
+	_animMap["p_hurt"] = AnimationCreate(pass + "player-hurt/player-hurt.plist", 2, 1.0f, "player-hurt-%i.png", true);
 
 	pass = "image/Sprites/enemies/";
 }
-
 
 cocos2d::Action* AnimManager::AnimationCreate(std::string plistPass,int ImageMax, float FCount, const char* ImageNameN, bool loop)
 {
@@ -58,36 +57,105 @@ cocos2d::Action* AnimManager::AnimationCreate(std::string plistPass,int ImageMax
 		return cocos2d::RepeatForever::create(animate);
 	}
 	return animate;
-	
-	//auto action = cocos2d::RepeatForever::create(animate);
-	//return sprite->runAction(action);
 }
 
-cocos2d::Action * AnimManager::GetAnim(std::string actionName)
+void AnimManager::AnimRun(cocos2d::Sprite * sprite, AnimState anim, CharaType type)
 {
-	return animMap[actionName];
-}
+	auto animName = GetAnimName(anim, type);
 
-void AnimManager::AnimRun(cocos2d::Sprite * sprite, std::string actionName)
-{
-	auto action = animMap[actionName];
-	if(action != nullptr)
+	auto action = _animMap[animName];
+	if (action != nullptr)
 	{
 		sprite->stopAllActions();
-		sprite->runAction(animMap[actionName]);
+		sprite->runAction(_animMap[animName]);
 	}
 	AnimCountPlus();
 }
 
 void AnimManager::AnimCountPlus()
 {
-	animMap["p_idle"]->retain();
-	animMap["p_run"]->retain();
-	animMap["p_runShot"]->retain();
-	animMap["p_shotUp"]->retain();
-	animMap["p_stand"]->retain();
-	animMap["p_jump"]->retain();
-	animMap["p_cling"]->retain();
-	animMap["p_duck"]->retain();
-	animMap["p_hurt"]->retain();
+	_animMap["p_idle"]->retain();
+	_animMap["p_run"]->retain();
+	_animMap["p_runShot"]->retain();
+	_animMap["p_shotUp"]->retain();
+	_animMap["p_stand"]->retain();
+	_animMap["p_jump"]->retain();
+	_animMap["p_cling"]->retain();
+	_animMap["p_duck"]->retain();
+	_animMap["p_hurt"]->retain();
+}
+
+std::string AnimManager::GetAnimName(AnimState anim, CharaType type)
+{
+	switch (type)
+	{
+	case CharaType::PLAYER:
+		switch (anim)
+		{
+		case IDLE:
+			return "p_idle";
+			break;
+		case RUN:
+			return "p_run";
+			break;
+		case RSHOT:
+			return "p_runShot";
+			break;
+		case SHOTUP:
+			return "p_shotUp";
+			break;
+		case STAND:
+			return "p_stand";
+			break;
+		case JUMP:
+			return "p_jump";
+			break;
+		case CLING:
+			return "p_cling";
+			break;
+		case DUCK:
+			return "p_duck";
+			break;
+		case HURT:
+			return "p_hurt";
+			break;
+		case STATE_MAX:
+			break;
+		default:
+			break;
+		}
+		break;
+	case CharaType::ENEMY:
+		switch (anim)
+		{
+		case IDLE:
+			break;
+		case RUN:
+			break;
+		case RSHOT:
+			break;
+		case SHOTUP:
+			break;
+		case STAND:
+			break;
+		case JUMP:
+			break;
+		case CLING:
+			break;
+		case DUCK:
+			break;
+		case HURT:
+			break;
+		case STATE_MAX:
+			break;
+		default:
+			break;
+		}
+		break;
+	case CharaType::CHARA_MAX:
+		break;
+	default:
+		break;
+	}
+	return "‚È‚µ";
 }

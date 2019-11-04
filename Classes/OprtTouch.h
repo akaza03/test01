@@ -15,10 +15,10 @@ private:
 
 	void CharaMove(Character *chara, int speed);												//	キャラクターの移動用
 
-	cocos2d::Vec2 StartTouchPos;																//	タッチ開始時の座標
-	cocos2d::Vec2 NowTouchPos;																	//	現在のタッチ座標
-	cocos2d::Vec2 OldTouchPos;																	//	1フレーム前のタッチ座標
-	cocos2d::Vec2 BackNowPos;																	//	NowTouchPos保存用
-	cocos2d::Vec2 BackOldPos;																	//	OldTouchPos保存用
+	cocos2d::Vec2 _startTouchPos;																//	タッチ開始時の座標
+	cocos2d::Vec2 _nowTouchPos;																	//	現在のタッチ座標
+	cocos2d::Vec2 _oldTouchPos;																	//	1フレーム前のタッチ座標
+	cocos2d::Vec2 _backNowPos;																	//	NowTouchPos保存用
+	cocos2d::Vec2 _backOldPos;																	//	OldTouchPos保存用
 };
 

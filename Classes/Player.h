@@ -9,8 +9,4 @@ public:
 	~Player();
 	void update(float d);
 	CREATE_FUNC(Player);
-
-	void SetDBBox(Sprite* sp);
-private:
-	void AnimStateUpdate();					//	アニメーションの更新
 };

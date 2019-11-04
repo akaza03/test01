@@ -1,9 +1,12 @@
 #pragma once
 #include <map>
 #include "cocos2d.h"
+#include "charaStruct.h"
 #include "Character.h"
 
 #define lpAnimManager AnimManager::GetInstance()
+
+class Character;
 
 class AnimManager
 {
@@ -20,18 +23,15 @@ public:
 	//	コンストラクタにてアニメーションの登録
 	cocos2d::Action* AnimationCreate(std::string plistPass, int ImageMax, float FCount, const char* ImageNameN, bool loop);
 
-	cocos2d::Action* GetAnim(std::string actionName);
-
-	//	アニメーションの開始
-	void AnimRun(cocos2d::Sprite* sprite, std::string actionName);
+	void AnimRun(cocos2d::Sprite* sprite, AnimState anim, CharaType type);		//	アニメーションの開始
 private:
 	AnimManager();
-	//	アニメーションの登録用
-	void AnimationInit();
+	void AnimationInit();														//	アニメーションの登録用
 
-	//	参照カウントを増やす
-	void AnimCountPlus();
+	std::string GetAnimName(AnimState anim, CharaType type);					//	アニメーション開始時のアニメーション名取得用
 
-	std::map < std::string, cocos2d::Action* > animMap;
+	void AnimCountPlus();														//	参照カウントを増やす
+
+	std::map < std::string, cocos2d::Action* > _animMap;						//	アニメーション情報を収納
 	static AnimManager* s_Instance;
 };
