@@ -105,6 +105,15 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite * sprite, int speed
 	return listener; 
 }
 
+void OprtTouch::update()
+{
+}
+
+cocos2d::EventKeyboard::KeyCode OprtTouch::GetKeyCode()
+{
+	return cocos2d::EventKeyboard::KeyCode();
+}
+
 void OprtTouch::SetMove(cocos2d::Touch* touch, cocos2d::Sprite *sprite, int Cspeed)
 {
 	float _ang;

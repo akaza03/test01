@@ -8,7 +8,7 @@ public:
 	Enemy();
 	~Enemy();
 	void update(float d);
-	
+	void SetCharaType();
 	CREATE_FUNC(Enemy);
 private:
 	void AnimStateUpdate();

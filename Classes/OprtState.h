@@ -11,6 +11,8 @@ public:
 	virtual ~OprtState();
 	virtual cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed) = 0;							//	キャラクターではないオブジェクト用
 	virtual cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed, Character *chara) = 0;			//	キャラクター用												
+	virtual void update() = 0;
+	virtual cocos2d::EventKeyboard::KeyCode GetKeyCode() = 0;
 protected:
 
 };

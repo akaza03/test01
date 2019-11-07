@@ -1,3 +1,4 @@
+#include "Character.h"
 #include "AnimManager.h"
 
 AnimManager* AnimManager::s_Instance = nullptr;

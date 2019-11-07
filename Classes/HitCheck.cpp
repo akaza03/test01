@@ -6,7 +6,7 @@
 //	return false;
 //}
 
-bool HitCheck::operator()(cocos2d::Sprite & sp)
+bool HitCheck::operator()(cocos2d::Sprite & sp, struct CharaID &st)
 {
 	//auto pos = sp->getPosition();
 	return false;

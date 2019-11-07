@@ -6,22 +6,13 @@
 
 Character::Character()
 {
-	_charaList.insert(std::make_pair("idle", _charaID));
-	_charaList.insert(std::make_pair("run", _charaID));
-	_charaList.insert(std::make_pair("pShot", _charaID));
-	_charaList.insert(std::make_pair("shotUp", _charaID));
-	_charaList.insert(std::make_pair("stand", _charaID));
-	_charaList.insert(std::make_pair("jump", _charaID));
-	_charaList.insert(std::make_pair("cling", _charaID));
-	_charaList.insert(std::make_pair("duck", _charaID));
-	_charaList.insert(std::make_pair("hurt", _charaID));
+	_charaID.anim = AnimState::IDLE;
+	_oldState = AnimState::STATE_MAX;
+	_movePos = cocos2d::Vec2(0, 0);
 
 	_moveFlagX = false;
 	_moveFlagY = false;
 	_Gravity = 0;
-
-	//_act = &HitCheck()(this);
-	_act = KeyCheck();
 }
 
 
@@ -32,14 +23,19 @@ Character::~Character()
 
 void Character::SetInit(std::string ImagePass, DIR stdir, cocos2d::Vec2 pos, int speed, cocos2d::Scene *scene)
 {
+	InitCharaID(speed);
+	SetCharaType();
 	auto sprite = Sprite::create(ImagePass);
+	setPosition(cocos2d::Vec2(pos.x + sprite->getContentSize().width / 2, pos.y));
+
 
 	_charaDir = stdir;
 	_startDir = _charaDir;
 	_oldDir = _charaDir;
 	_oldPos = pos;
 
-	setPosition(cocos2d::Vec2(pos.x + sprite->getContentSize().width / 2, pos.y));
+
+
 	this->_speed = speed;
 
 	//	プラットフォームによって操作方法を変える
@@ -52,8 +48,38 @@ void Character::SetInit(std::string ImagePass, DIR stdir, cocos2d::Vec2 pos, int
 		_oprtState = new OprtTouch();
 	}
 
+
+
 	//	操作イベントの作成
 	scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_oprtState->oprtInit(this, speed, this),scene);
+}
+
+void Character::InitCharaID(int speed)
+{
+	//	キャラクターの情報の追加
+	_charaID.speed = speed;
+	_charaID.key[cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW] = std::make_pair(false, false);
+	_charaID.key[cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW] = std::make_pair(false, false);
+	_charaID.key[cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW] = std::make_pair(false, false);
+	_charaID.key[cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW] = std::make_pair(false, false);
+	_charaID.anim = AnimState::IDLE;
+	_charaList.insert(std::make_pair("idle", _charaID));
+	_charaID.anim = AnimState::RUN;
+	_charaList.insert(std::make_pair("run", _charaID));
+	_charaID.anim = AnimState::RSHOT;
+	_charaList.insert(std::make_pair("pShot", _charaID));
+	_charaID.anim = AnimState::SHOTUP;
+	_charaList.insert(std::make_pair("shotUp", _charaID));
+	_charaID.anim = AnimState::STAND;
+	_charaList.insert(std::make_pair("stand", _charaID));
+	_charaID.anim = AnimState::JUMP;
+	_charaList.insert(std::make_pair("jump", _charaID));
+	_charaID.anim = AnimState::CLING;
+	_charaList.insert(std::make_pair("cling", _charaID));
+	_charaID.anim = AnimState::DUCK;
+	_charaList.insert(std::make_pair("duck", _charaID));
+	_charaID.anim = AnimState::HURT;
+	_charaList.insert(std::make_pair("hurt", _charaID));
 }
 
 AnimState Character::GetState()
@@ -254,7 +280,6 @@ void Character::dirUpdate()
 
 void Character::moveUpdate()
 {
-
 	_JumpStart = false;
 	//	移動
 	if (_moveFlagX)
@@ -269,24 +294,24 @@ void Character::moveUpdate()
 
 void Character::AnimStateUpdate()
 {
-	//	AnimStateの更新
-	if (_moveFlagY)
-	{
-		_state = AnimState::JUMP;
-	}
-	else if (_moveFlagX)
-	{
-		_state = AnimState::RUN;
-	}
-	else
-	{
-		_state = AnimState::IDLE;
-	}
+	////	AnimStateの更新
+	//if (_moveFlagY)
+	//{
+	//	_state = AnimState::JUMP;
+	//}
+	//else if (_moveFlagX)
+	//{
+	//	_state = AnimState::RUN;
+	//}
+	//else
+	//{
+	//	_state = AnimState::IDLE;
+	//}
 
-	//	アニメーションの更新
-	if (_state != _oldState)
-	{
-		lpAnimManager.AnimRun(this, _state, _cType);
-	}
-	_oldState = _state;
+	////	アニメーションの更新
+	//if (_state != _oldState)
+	//{
+	//	lpAnimManager.AnimRun(this, _charaID.anim, _cType);
+	//}
+	//_oldState = _state;
 }

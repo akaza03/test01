@@ -47,13 +47,14 @@ cocos2d::EventListener * OprtKey::oprtInit(cocos2d::Sprite * sprite, int speed, 
 	auto listener = cocos2d::EventListenerKeyboard::create();
 
 	//	キーを押した瞬間
-	listener->onKeyPressed = [speed, chara](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* keyEvent)
+	listener->onKeyPressed = [speed, chara, this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* keyEvent)
 	{		
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
 		{
 			//	左移動
 			chara->SetMovePosX(- speed);
 			chara->SetMoveFlagX(true);
+			
 		}
 		else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 		{
@@ -75,6 +76,8 @@ cocos2d::EventListener * OprtKey::oprtInit(cocos2d::Sprite * sprite, int speed, 
 		{
 			//chara->SetState(AnimState::DUCK);
 		}
+
+		_keyCode = keyCode;
 	};
 
 	//	キーを離した瞬間
@@ -101,4 +104,13 @@ cocos2d::EventListener * OprtKey::oprtInit(cocos2d::Sprite * sprite, int speed, 
 	};
 
 	return listener;
+}
+
+void OprtKey::update()
+{
+}
+
+cocos2d::EventKeyboard::KeyCode OprtKey::GetKeyCode()
+{
+	return _keyCode;
 }

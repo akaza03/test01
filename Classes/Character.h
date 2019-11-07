@@ -8,15 +8,16 @@ class OprtState;
 
 //using spPointer = bool (*)(cocos2d::Sprite);
 using actionPoint = std::function<bool(cocos2d::Sprite&,struct CharaID&)>;
+using keyList =  std::map<cocos2d::EventKeyboard::KeyCode, std::pair<bool, bool>>;	//	キー用のリスト(now,old)
 
 //	キャラクターの情報用
 struct CharaID
 {
-	cocos2d::Vec2 speed;													//	移動スピード
-	cocos2d::EventKeyboard::KeyCode key;									//	どのキーを押したら処理するのか(List)
-	AnimState anim;															//	現在のアニメーション
-	cocos2d::Point checkPoint;												//	当たり判定用
-	CharaType cType;														//	キャラクターのタイプ
+	int speed;																		//	移動スピード
+	keyList key;																	//	どのキーを押したら処理するのか(List)
+	AnimState anim;																	//	再生するアニメーション
+	cocos2d::Point checkPoint;														//	当たり判定用
+	CharaType cType;																//	キャラクターのタイプ
 	//	次に呼ぶ関数
 };
 
@@ -56,6 +57,8 @@ public:
 	void SetDBBox(Sprite* sp);														//	デバッグ時の当たり判定用BoxのSet
 
 protected:
+	void InitCharaID(int speed);													//	CharaIDの初期化
+
 	void CheckCol();																//	衝突判定用(updateで呼び出す)
 	int GetTile(cocos2d::Vec2 _pos, cocos2d::TMXLayer *_layer);						//	代入した座標のタイルを返す
 
@@ -67,8 +70,6 @@ protected:
 	float _Gravity;																	//	重力
 	cocos2d::Vec2 _oldPos;															//	1フレーム前の座標
 	OprtState *_oprtState;															//	操作制御
-	AnimState _state;																//	現在のアニメーション
-	AnimState _oldState;															//	1フレーム前のアニメーション
 
 	bool _moveFlagX;																//	キャラクターがX座標を移動中かどうか
 	bool _moveFlagY;																//	キャラクターがY座標を移動中がどうか
@@ -83,15 +84,19 @@ protected:
 
 	CharaType _cType;																//	キャラクターのタイプ
 
+	
 
+	virtual void SetCharaType() = 0;
 
-	CharaID _charaID;														//	キャラクターの情報用
-	std::map<const char *,CharaID> _charaList;								//	キャラクターの情報用リスト
-	std::list<cocos2d::EventKeyboard::KeyCode> _keyList;					//	キー用のリスト
+	AnimState _state;																//	現在のアニメーション
+	AnimState _oldState;															//	1フレーム前のアニメーション
 
-	std::list<actionPoint> _actList;										//	アクションの管理用
+	CharaID _charaID;																//	キャラクターの情報用
+	std::map<const char *,CharaID> _charaList;										//	キャラクターの情報用リスト
 
-	actionPoint _act;
+	//std::list<cocos2d::EventKeyboard::KeyCode> _keyList;							//	キー用のリスト
+
+	//std::list<actionPoint> _actList;												//	アクションの管理用
 
 	//bool(*_act)(cocos2d::Sprite&);
 };

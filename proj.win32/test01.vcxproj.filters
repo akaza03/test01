@@ -66,9 +66,6 @@
     <ClCompile Include="..\Classes\Move.cpp">
       <Filter>Action</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\KeyCheck.cpp">
-      <Filter>Action</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -117,9 +114,6 @@
       <Filter>Action</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ActSet.h">
-      <Filter>Action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\KeyCheck.h">
       <Filter>Action</Filter>
     </ClInclude>
   </ItemGroup>

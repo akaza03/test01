@@ -27,6 +27,14 @@ void Enemy::update(float d)
 {
 }
 
+void Enemy::SetCharaType()
+{
+	for (auto itr : _charaList)
+	{
+		itr.second.cType = CharaType::ENEMY;
+	}
+}
+
 void Enemy::AnimStateUpdate()
 {
 
