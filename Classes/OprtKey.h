@@ -22,6 +22,7 @@ public:
 	cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed, Character *chara);				//	キャラクター用
 	void update();
 	cocos2d::EventKeyboard::KeyCode GetKeyCode();
+
 private:
 	cocos2d::EventKeyboard::KeyCode _keyCode;
 	//inputMap _input;

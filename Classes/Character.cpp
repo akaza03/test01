@@ -6,7 +6,7 @@
 
 Character::Character()
 {
-	_charaID.anim = AnimState::IDLE;
+	_state = AnimState::IDLE;
 	_oldState = AnimState::STATE_MAX;
 	_movePos = cocos2d::Vec2(0, 0);
 

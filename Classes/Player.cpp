@@ -15,41 +15,49 @@ void Player::update(float d)
 {
 	for (auto itr : _charaList)
 	{
-		//	キーのチェック
-		auto checkKey = _oprtState->GetKeyCode();
-
-		//	そのキーがマップにあるか検索(0なら存在しない)
-		if (itr.second.key.count(checkKey) != 0)
+		if (_state == itr.second.anim)
 		{
-
-			//	あった場合はnowをtrueに
-			itr.second.key[checkKey].first = true;
-
-			//	now != old
-			if (itr.second.key[checkKey].first != itr.second.key[checkKey].second)
+			//	キーのチェック
+			auto checkKey = _oprtState->GetKeyCode();
+			//	そのキーがマップにあるか検索(0なら存在しない)
+			if (itr.second.key.count(checkKey) != 0)
 			{
+				//	nowもoldもfalseの場合
+				if (!itr.second.key[checkKey].first/* && !itr.second.key[checkKey].second*/)
+				{
+					itr.second.key[checkKey].first = true;
+					Move()(*this, itr.second);
+				}
+				//	nowが既にtrueだった場合
+				else if(itr.second.key[checkKey].first)
+				{
+					itr.second.key[checkKey].first = false;
+				}
 
+
+				//	nowとoldどちらかがtrueなら
+				if (itr.second.key[checkKey].first || itr.second.key[checkKey].second)
+				{
+
+				}
 			}
-		}
 
-		//	当たり判定
-		if (HitCheck()(*this, itr.second))
-		{
-			//itr.
-			//itr.second.speed = 0;
-		}
 
-		//	アニメーションの更新
-		if (itr.second.anim != _oldState)
-		{
-			lpAnimManager.AnimRun(this, itr.second.anim, itr.second.cType);
-		}
+			//	当たり判定
+			if (HitCheck()(*this, itr.second))
+			{
+				//itr.
+				//itr.second.speed = 0;
+			}
 
-		//	キーの更新
-		for (auto keyItr : itr.second.key)
-		{
-			//	old = now
-			keyItr.second.second = keyItr.second.first;
+			//	アニメーションの更新
+			if (itr.second.anim != _oldState)
+			{
+				lpAnimManager.AnimRun(this, itr.second.anim, itr.second.cType);
+			}
+			_oldState = _state;
+
+			_oprtState->update();
 		}
 	}
 

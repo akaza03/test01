@@ -3,6 +3,6 @@
 
 struct Move
 {
-	bool operator()(cocos2d::Sprite & sp);
+	bool operator()(cocos2d::Sprite & sp, struct CharaID &st);
 };
 
