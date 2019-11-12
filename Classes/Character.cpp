@@ -58,10 +58,10 @@ void Character::InitCharaID(int speed)
 {
 	//	キャラクターの情報の追加
 	_charaID.speed = speed;
-	_charaID.key[cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW] = std::make_pair(false, false);
-	_charaID.key[cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW] = std::make_pair(false, false);
-	_charaID.key[cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW] = std::make_pair(false, false);
-	_charaID.key[cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW] = std::make_pair(false, false);
+	_charaID.key[UseKey::K_LEFT] = std::make_pair(false, false);
+	_charaID.key[UseKey::K_RIGHT] = std::make_pair(false, false);
+	_charaID.key[UseKey::K_UP] = std::make_pair(false, false);
+	_charaID.key[UseKey::K_DOWN] = std::make_pair(false, false);
 	_charaID.anim = AnimState::IDLE;
 	_charaList.insert(std::make_pair("idle", _charaID));
 	_charaID.anim = AnimState::RUN;

@@ -23,6 +23,17 @@ enum CharaType
 	CHARA_MAX
 };
 
+//	使用キー
+enum UseKey
+{
+	K_NON,
+	K_LEFT,
+	K_RIGHT,
+	K_UP,
+	K_DOWN,
+	KEY_MAX
+};
+
 //	向き
 enum DIR
 {

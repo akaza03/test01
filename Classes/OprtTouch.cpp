@@ -109,10 +109,11 @@ void OprtTouch::update()
 {
 }
 
-cocos2d::EventKeyboard::KeyCode OprtTouch::GetKeyCode()
+UseKey OprtTouch::GetPressKey()
 {
-	return cocos2d::EventKeyboard::KeyCode();
+	return UseKey();
 }
+
 
 void OprtTouch::SetMove(cocos2d::Touch* touch, cocos2d::Sprite *sprite, int Cspeed)
 {

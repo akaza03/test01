@@ -47,61 +47,75 @@ cocos2d::EventListener * OprtKey::oprtInit(cocos2d::Sprite * sprite, int speed, 
 	auto listener = cocos2d::EventListenerKeyboard::create();
 
 	//	キーを押した瞬間
-	listener->onKeyPressed = [speed, chara, this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* keyEvent)
+	listener->onKeyPressed = [&](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* keyEvent)
 	{
-		//if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
-		//{
-		//	//	左移動
-		//	chara->SetMovePosX(- speed);
-		//	chara->SetMoveFlagX(true);
-		//	
-		//}
-		//else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
-		//{
-		//	//	右移動
-		//	chara->SetMovePosX(speed);
-		//	chara->SetMoveFlagX(true);
-		//}
-		//else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
-		//{
-		//	if (chara->GetMovePos().y == 0)
-		//	{
-		//		//	ジャンプ
-		//		chara->SetMovePosY(speed);
-		//		chara->SetMoveFlagY(true);
-		//		chara->SetJumpStart(true);
-		//	}
-		//}
-		//else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
-		//{
-		//	//chara->SetState(AnimState::DUCK);
-		//}
+		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+		{
+			//	左移動
+			_pressKey = UseKey::K_LEFT;
 
-		_keyCode = keyCode;
+			//chara->SetMovePosX(- speed);
+			//chara->SetMoveFlagX(true);
+		}
+		else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
+		{
+			//	右移動
+			_pressKey = UseKey::K_RIGHT;
+
+			//chara->SetMovePosX(speed);
+			//chara->SetMoveFlagX(true);
+		}
+		else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
+		{
+			//if (chara->GetMovePos().y == 0)
+			{
+				//	ジャンプ
+				_pressKey = UseKey::K_UP;
+
+				//chara->SetMovePosY(speed);
+				//chara->SetMoveFlagY(true);
+				//chara->SetJumpStart(true);
+			}
+		}
+		else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
+		{
+			_pressKey = UseKey::K_DOWN;
+			//chara->SetState(AnimState::DUCK);
+		}
 	};
 
 	//	キーを離した瞬間
-	listener->onKeyReleased = [speed,chara,this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* keyEvent)
+	listener->onKeyReleased = [this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* keyEvent)
 	{
-		//if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
-		//{
-		//	//	movePosXが左に向かっていたら0にする
-		//	if (chara->GetMovePos().x < 0)
-		//	{
-		//		chara->SetMovePosX(0);
-		//		chara->SetMoveFlagX(false);
-		//	}
-		//}
-		//else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
-		//{
-		//	//	movePosXが右に向かっていたら0にする
-		//	if (chara->GetMovePos().x > 0)
-		//	{
-		//		chara->SetMovePosX(0);
-		//		chara->SetMoveFlagX(false);
-		//	}
-		//}
-		_keyCode = keyCode;
+		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+		{
+			_pressKey = UseKey::K_LEFT;
+			////	movePosXが左に向かっていたら0にする
+			//if (chara->GetMovePos().x < 0)
+			//{
+			//	chara->SetMovePosX(0);
+			//	chara->SetMoveFlagX(false);
+			//}
+		}
+		else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
+		{
+			_pressKey = UseKey::K_RIGHT;
+
+			////	movePosXが右に向かっていたら0にする
+			//if (chara->GetMovePos().x > 0)
+			//{
+			//	chara->SetMovePosX(0);
+			//	chara->SetMoveFlagX(false);
+			//}
+		}
+		else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
+		{
+			_pressKey = UseKey::K_UP;
+		}
+		else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
+		{
+			_pressKey = UseKey::K_DOWN;
+		}
 	};
 
 	return listener;
@@ -109,10 +123,12 @@ cocos2d::EventListener * OprtKey::oprtInit(cocos2d::Sprite * sprite, int speed, 
 
 void OprtKey::update()
 {
-	_keyCode = cocos2d::EventKeyboard::KeyCode::KEY_NONE;
+	_pressKey = K_NON;
 }
 
-cocos2d::EventKeyboard::KeyCode OprtKey::GetKeyCode()
+UseKey OprtKey::GetPressKey()
 {
-	return _keyCode;
+	return _pressKey;
 }
+
+

@@ -13,35 +13,37 @@ Player::~Player()
 
 void Player::update(float d)
 {
-	for (auto itr : _charaList)
+	for (auto &itr : _charaList)
 	{
 		if (_state == itr.second.anim)
 		{
 			//	キーのチェック
-			auto checkKey = _oprtState->GetKeyCode();
+			auto checkKey = _oprtState->GetPressKey();
+
 			//	そのキーがマップにあるか検索(0なら存在しない)
-			if (itr.second.key.count(checkKey) != 0)
+			//if (itr.second.key.count(checkKey) != 0)
 			{
 				//	nowもoldもfalseの場合
-				if (!itr.second.key[checkKey].first/* && !itr.second.key[checkKey].second*/)
+				if (!itr.second.key[checkKey].first)
 				{
 					itr.second.key[checkKey].first = true;
-					Move()(*this, itr.second);
 				}
 				//	nowが既にtrueだった場合
 				else if(itr.second.key[checkKey].first)
 				{
 					itr.second.key[checkKey].first = false;
 				}
-
-
-				//	nowとoldどちらかがtrueなら
-				if (itr.second.key[checkKey].first || itr.second.key[checkKey].second)
-				{
-
-				}
 			}
 
+			//	移動
+			if (Move()(*this, itr.second))
+			{
+				_state = AnimState::RUN;
+			}
+			if (Jump()(*this, itr.second))
+			{
+				//_state = AnimState::JUMP;
+			}
 
 			//	当たり判定
 			if (HitCheck()(*this, itr.second))
@@ -51,20 +53,25 @@ void Player::update(float d)
 			}
 
 			//	アニメーションの更新
-			if (itr.second.anim != _oldState)
+			//if (itr.second.anim != _oldState)
+			//{
+			//	lpAnimManager.AnimRun(this, itr.second.anim, itr.second.cType);
+			//}
+			if (_state != _oldState)
 			{
-				lpAnimManager.AnimRun(this, itr.second.anim, itr.second.cType);
+				lpAnimManager.AnimRun(this, _state, itr.second.cType);
 			}
+
 			_oldState = _state;
 
-			_oprtState->update();
+			
 		}
 	}
-
+	_oprtState->update();
 
 
 //	//	当たり判定処理
-//	CheckCol();
+	//CheckCol();
 //	//	重力を座標に加算する
 //	setPosition(getPosition().x, getPosition().y + _Gravity);
 //	//	デバッグ用Boxの座標設定

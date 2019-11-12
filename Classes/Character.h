@@ -8,7 +8,7 @@ class OprtState;
 
 //using spPointer = bool (*)(cocos2d::Sprite);
 using actionPoint = std::function<bool(cocos2d::Sprite&,struct CharaID&)>;
-using keyList =  std::map<cocos2d::EventKeyboard::KeyCode, std::pair<bool, bool>>;	//	キー用のリスト(now,old)
+using keyList =  std::map<UseKey, std::pair<bool, bool>>;	//	キー用のリスト(now,old)
 
 //	キャラクターの情報用
 struct CharaID

@@ -21,10 +21,11 @@ public:
 	cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed);								//	キャラクターではないオブジェクト用
 	cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed, Character *chara);				//	キャラクター用
 	void update();
-	cocos2d::EventKeyboard::KeyCode GetKeyCode();
+	UseKey GetPressKey();
 
 private:
-	cocos2d::EventKeyboard::KeyCode _keyCode;
+	UseKey _pressKey;
+	UseKey _releaseKey;
 	//inputMap _input;
 };
 

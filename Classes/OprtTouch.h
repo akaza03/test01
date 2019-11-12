@@ -10,7 +10,7 @@ public:
 	cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed);						//	キャラクターではないオブジェクト用
 	cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed, Character *chara);		//	キャラクター用
 	void update();
-	cocos2d::EventKeyboard::KeyCode GetKeyCode();
+	UseKey GetPressKey();
 
 private:
 	void SetMove(cocos2d::Touch* touch, cocos2d::Sprite *sprite, int speed);					//	移動開始時の準備用
