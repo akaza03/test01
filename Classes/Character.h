@@ -2,6 +2,7 @@
 #include <functional>
 #include "ActSet.h"
 #include "AnimManager.h"
+#include "UseKey.h"
 #include "OprtState.h"
 
 class OprtState;

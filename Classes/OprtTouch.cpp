@@ -114,6 +114,11 @@ UseKey OprtTouch::GetPressKey()
 	return UseKey();
 }
 
+UseKey OprtTouch::GetReleaseKey()
+{
+	return UseKey();
+}
+
 
 void OprtTouch::SetMove(cocos2d::Touch* touch, cocos2d::Sprite *sprite, int Cspeed)
 {

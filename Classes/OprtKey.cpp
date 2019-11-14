@@ -89,7 +89,7 @@ cocos2d::EventListener * OprtKey::oprtInit(cocos2d::Sprite * sprite, int speed, 
 	{
 		if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_LEFT_ARROW)
 		{
-			_pressKey = UseKey::K_LEFT;
+			_releaseKey = UseKey::K_LEFT;
 			////	movePosX‚ª¶‚ÉŒü‚©‚Á‚Ä‚¢‚½‚ç0‚É‚·‚é
 			//if (chara->GetMovePos().x < 0)
 			//{
@@ -99,7 +99,7 @@ cocos2d::EventListener * OprtKey::oprtInit(cocos2d::Sprite * sprite, int speed, 
 		}
 		else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 		{
-			_pressKey = UseKey::K_RIGHT;
+			_releaseKey = UseKey::K_RIGHT;
 
 			////	movePosX‚ª‰E‚ÉŒü‚©‚Á‚Ä‚¢‚½‚ç0‚É‚·‚é
 			//if (chara->GetMovePos().x > 0)
@@ -110,11 +110,11 @@ cocos2d::EventListener * OprtKey::oprtInit(cocos2d::Sprite * sprite, int speed, 
 		}
 		else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_UP_ARROW)
 		{
-			_pressKey = UseKey::K_UP;
+			_releaseKey = UseKey::K_UP;
 		}
 		else if (keyCode == cocos2d::EventKeyboard::KeyCode::KEY_DOWN_ARROW)
 		{
-			_pressKey = UseKey::K_DOWN;
+			_releaseKey = UseKey::K_DOWN;
 		}
 	};
 
@@ -123,12 +123,18 @@ cocos2d::EventListener * OprtKey::oprtInit(cocos2d::Sprite * sprite, int speed, 
 
 void OprtKey::update()
 {
-	_pressKey = K_NON;
+	_pressKey = UseKey::K_NON;
+	_releaseKey = UseKey::K_NON;
 }
 
 UseKey OprtKey::GetPressKey()
 {
 	return _pressKey;
+}
+
+UseKey OprtKey::GetReleaseKey()
+{
+	return _releaseKey;
 }
 
 

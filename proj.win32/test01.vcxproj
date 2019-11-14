@@ -164,6 +164,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\OprtState.cpp" />
     <ClCompile Include="..\Classes\OprtTouch.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
+    <ClCompile Include="..\Classes\UseKey.cpp" />
     <ClCompile Include="..\Classes\_DebugConOut.cpp" />
     <ClCompile Include="..\Classes\_DebugDispOut.cpp" />
     <ClCompile Include="main.cpp" />
@@ -183,6 +184,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\OprtState.h" />
     <ClInclude Include="..\Classes\OprtTouch.h" />
     <ClInclude Include="..\Classes\Player.h" />
+    <ClInclude Include="..\Classes\UseKey.h" />
     <ClInclude Include="..\Classes\_DebugConOut.h" />
     <ClInclude Include="..\Classes\_DebugDispOut.h" />
     <ClInclude Include="main.h" />

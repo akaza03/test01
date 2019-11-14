@@ -69,6 +69,7 @@
     <ClCompile Include="..\Classes\Jump.cpp">
       <Filter>Action</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\UseKey.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -122,6 +123,7 @@
     <ClInclude Include="..\Classes\Jump.h">
       <Filter>Action</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\UseKey.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
