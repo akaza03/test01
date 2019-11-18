@@ -8,6 +8,5 @@ public:
 	Player();
 	~Player();
 	void update(float d);
-	void SetCharaType();
 	CREATE_FUNC(Player);
 };

@@ -108,9 +108,6 @@
     <ClInclude Include="..\Classes\AnimManager.h">
       <Filter>Action</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\charaStruct.h">
-      <Filter>Action</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\HitCheck.h">
       <Filter>Action</Filter>
     </ClInclude>
@@ -124,6 +121,9 @@
       <Filter>Action</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\UseKey.h" />
+    <ClInclude Include="..\Classes\charaStruct.h">
+      <Filter>unit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">

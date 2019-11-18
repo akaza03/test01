@@ -2,7 +2,7 @@
 
 Player::Player()
 {
-	_charaID.cType = CharaType::PLAYER;
+	_actData.cType = CharaType::PLAYER;
 
 	this->scheduleUpdate();
 }
@@ -23,33 +23,40 @@ void Player::update(float d)
 	{
 		if (_state == itr.second.anim)
 		{
-			////	押されたキーのチェック
-			//auto checkKey = _oprtState->GetPressKey();
-			////	そのキーがマップにあるか検索(0なら存在しない)
-			//if (itr.second.key.count(checkKey) != 0)
-			//{
-			//	//	nowもoldもfalseの場合
-			//	if (!itr.second.key[checkKey].first)
-			//	{
-			//		itr.second.key[checkKey].first = true;
+			//	そのキーが登録されていればキーを更新する
+			if (itr.second.key[pressKey].second)
+			{
+				itr.second.key[pressKey].first = true;
+			}
+			if (itr.second.key[releaseKey].second)
+			{
+				itr.second.key[releaseKey].first = false;
+			}
 
-			//	}
-			//	//	nowが既にtrueだった場合
-			//	else if(itr.second.key[checkKey].first)
-			//	{
-			//		itr.second.key[checkKey].first = false;
-			//	}
-			//}
+			//	重力を加算する
+			float gy = -0.05f;
+			_Gravity += gy;
 
-			itr.second.key[pressKey].first = true;
-			itr.second.key[releaseKey].first = false;
+			//	移動距離
+			auto distance = cocos2d::Vec2(0,0);
+
+			//	当たり判定
+			HitCheck()(*this, itr.second);
+			distance.y = Jump()(*this, itr.second);
+			
+			if(itr.second.checkPoint[DIR::DOWN])
+			{
+				_Gravity = 0;
+			}
+
+			distance.x = Move()(*this, itr.second);
 
 			//	移動
-			if (Jump()(*this, itr.second))
+			if (distance.y != 0)
 			{
 				_state = AnimState::JUMP;
 			}
-			if (Move()(*this, itr.second))
+			else if (distance.x != 0)
 			{
 				_state = AnimState::RUN;
 			}
@@ -58,18 +65,9 @@ void Player::update(float d)
 				_state = AnimState::IDLE;
 			}
 
-			//	当たり判定
-			if (HitCheck()(*this, itr.second))
-			{
-				//itr.
-				//itr.second.speed = 0;
-			}
+			setPosition(getPosition().x + distance.x, getPosition().y + distance.y + _Gravity);
 
 			//	アニメーションの更新
-			//if (itr.second.anim != _oldState)
-			//{
-			//	lpAnimManager.AnimRun(this, itr.second.anim, itr.second.cType);
-			//}
 			if (_state != _oldState)
 			{
 				//	次のアニメーションに現在のキー情報を渡す準備
@@ -113,16 +111,12 @@ void Player::update(float d)
 				//	キーの初期化
 				for (auto itrKey:UseKey())
 				{
-					nextKey.key[itrKey] = itr.second.key[itrKey];
-					itr.second.key[itrKey] = std::make_pair(false, false);
+					nextKey.key[itrKey].first = itr.second.key[itrKey].first;
+					itr.second.key[itrKey].first = false;
 				}
-
 				lpAnimManager.AnimRun(this, _state, itr.second.cType);
 			}
-
 			_oldState = _state;
-
-			
 		}
 	}
 	_oprtState->update();
@@ -144,13 +138,5 @@ void Player::update(float d)
 //	moveUpdate();
 //	//	アニメーションの更新
 //	AnimStateUpdate();
-}
-
-void Player::SetCharaType()
-{
-	for (auto itr : _charaList)
-	{
-		itr.second.cType = CharaType::PLAYER;
-	}
 }
 

@@ -84,8 +84,8 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite * sprite, int speed
 	{
 		_oldTouchPos = _nowTouchPos;
 		_nowTouchPos = touch->getLocation();
-		chara->SetState(AnimState::RUN);
-		chara->SetMoveFlagX(true);
+		//chara->SetState(AnimState::RUN);
+		//chara->SetMoveFlagX(true);
 
 		CharaMove(chara, speed);
 
@@ -97,8 +97,8 @@ cocos2d::EventListener * OprtTouch::oprtInit(cocos2d::Sprite * sprite, int speed
 		auto nowScene = cocos2d::Director::getInstance()->getRunningScene();
 		nowScene->removeChildByName("touchIcon");
 		_oldTouchPos = _nowTouchPos;
-		chara->SetState(AnimState::IDLE);
-		chara->SetMoveFlagX(false);
+		//chara->SetState(AnimState::IDLE);
+		//chara->SetMoveFlagX(false);
 		return true;
 	};
 
@@ -154,25 +154,25 @@ void OprtTouch::CharaMove(Character *chara, int speed)
 	auto charaPosX = - cosf(_ang) * speed;
 	auto charaPosY = - sinf(_ang) * speed;
 
-	chara->SetMovePosX(charaPosX);
-	if (charaPosY > 0)
-	{
-		chara->SetMoveFlagY(true);
-		chara->SetJumpStart(true);
-		chara->SetMovePosY(charaPosY);
-	}
-	else
-	{
-		chara->SetMovePosY(0);
-	}
+	//chara->SetMovePosX(charaPosX);
+	//if (charaPosY > 0)
+	//{
+	//	chara->SetMoveFlagY(true);
+	//	chara->SetJumpStart(true);
+	//	chara->SetMovePosY(charaPosY);
+	//}
+	//else
+	//{
+	//	chara->SetMovePosY(0);
+	//}
 
-	if (charaPosX > 0)
-	{
-		chara->SetDir(DIR::RIGHT);
-	}
-	if (charaPosX < 0)
-	{
-		chara->SetDir(DIR::LEFT);
-	}
+	//if (charaPosX > 0)
+	//{
+	//	chara->SetDir(DIR::RIGHT);
+	//}
+	//if (charaPosX < 0)
+	//{
+	//	chara->SetDir(DIR::LEFT);
+	//}
 }
 

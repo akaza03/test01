@@ -4,16 +4,10 @@
 
 Enemy::Enemy()
 {
-	Sprite::create("image/Sprites/enemies/crab-idle/crab-idle-1.png");
-	setPosition(cocos2d::Vec2(100, 100));
-	_state = AnimState::IDLE;
-	_oldState = AnimState::STATE_MAX;
+	//Sprite::create("image/Sprites/enemies/crab-idle/crab-idle-1.png");
+	//setPosition(cocos2d::Vec2(100, 100));
 
-	_charaDir = DIR::RIGHT;
-	_startDir = _charaDir;
-	_oldDir = _charaDir;
-
-	this->_speed = 5;
+	_actData.cType = CharaType::ENEMY;
 
 	this->scheduleUpdate();
 }
@@ -25,14 +19,6 @@ Enemy::~Enemy()
 
 void Enemy::update(float d)
 {
-}
-
-void Enemy::SetCharaType()
-{
-	for (auto itr : _charaList)
-	{
-		itr.second.cType = CharaType::ENEMY;
-	}
 }
 
 void Enemy::AnimStateUpdate()

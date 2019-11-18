@@ -1,23 +1,31 @@
-#include "Character.h""
+#include "Character.h"
 #include "Move.h"
 
-bool Move::operator()(cocos2d::Sprite & sp, CharaID & st)
+float Move::operator()(cocos2d::Sprite & sp, ActData & act)
 {
 	auto moveDistance = 0.0f;
-	if (st.key[UseKey::K_RIGHT].first)
+	if (act.key[UseKey::K_LEFT].first && act.key[UseKey::K_LEFT].second)
 	{
-		moveDistance += st.speed;
+		if (!act.checkPoint[DIR::LEFT])
+		{
+			moveDistance -= act.speed;
+		}
 	}
-	if (st.key[UseKey::K_LEFT].first)
+	if (act.key[UseKey::K_RIGHT].first && act.key[UseKey::K_RIGHT].second)
 	{
-		moveDistance -= st.speed;
+		if (!act.checkPoint[DIR::RIGHT])
+		{
+			moveDistance += act.speed;
+		}
 	}
 
-	sp.setPosition(sp.getPosition().x + moveDistance, sp.getPosition().y);
+	return moveDistance;
 
-	if (moveDistance != 0.0f)
-	{
-		return true;
-	}
-	return false;
+	//sp.setPosition(sp.getPosition().x + moveDistance, sp.getPosition().y);
+
+	//if (moveDistance != 0.0f)
+	//{
+	//	return true;
+	//}
+	//return false;
 }

@@ -59,6 +59,10 @@ list(APPEND GAME_SOURCE
      Classes/AnimManager.cpp
      Classes/_DebugConOut.cpp
      Classes/_DebugDispOut.cpp
+     Classes/HitCheck.cpp
+     Classes/Jump.cpp
+     Classes/Move.cpp
+     Classes/UseKey.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
@@ -72,6 +76,12 @@ list(APPEND GAME_HEADER
      Classes/AnimManager.h
      Classes/_DebugConOut.h
      Classes/_DebugDispOut.h
+     Classes/ActSet.h
+     Classes/charaStruct.h
+     Classes/HitCheck.h
+     Classes/Jump.h
+     Classes/Move.h
+     Classes/UseKey.h
      )
 
 if(ANDROID)
