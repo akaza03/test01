@@ -73,6 +73,23 @@ void AnimManager::AnimRun(cocos2d::Sprite * sprite, AnimState anim, CharaType ty
 	AnimCountPlus();
 }
 
+AnimState AnimManager::AnimStateUpdate(struct ActData &act)
+{
+	if (act.distance.y != 0)
+	{
+		return AnimState::JUMP;
+	}
+	else if (act.distance.x != 0)
+	{
+		return AnimState::RUN;
+	}
+	else
+	{
+		return AnimState::IDLE;
+	}
+	return AnimState::IDLE;
+}
+
 void AnimManager::AnimCountPlus()
 {
 	_animMap["p_idle"]->retain();

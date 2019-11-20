@@ -25,7 +25,7 @@ public:
 
 	void AnimRun(cocos2d::Sprite* sprite, AnimState anim, CharaType type);		//	アニメーションの開始
 
-	void AnimStateUpdate();														//	ステート
+	AnimState AnimStateUpdate(struct ActData &act);								//	ステートのアップデート
 private:
 	AnimManager();
 	void AnimationInit();														//	アニメーションの登録用

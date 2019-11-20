@@ -75,6 +75,9 @@
     <ClCompile Include="..\Classes\AnimManager.cpp">
       <Filter>manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\DirCheck.cpp">
+      <Filter>module</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AnimManager.h">
       <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DirCheck.h">
+      <Filter>module</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

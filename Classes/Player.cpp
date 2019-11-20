@@ -27,62 +27,30 @@ void Player::update(float d)
 				}
 			}
 
-			//	重力を加算する
-			float gy = -0.05f;
-			_Gravity += gy;
-
 			//	当たり判定
 			HitCheck()(*this, itr.second);
 
 			//	移動処理
-			itr.second.distance.y = Jump()(*this, itr.second);
-			itr.second.distance.x = Move()(*this, itr.second);
+			Jump()(*this, itr.second);
+			Move()(*this, itr.second);
 
-			//	重力を0に
+			//	重力を加算する
+			float gy = -0.05f;
+			_Gravity += gy;
+			//	足場がある場合は重力を0に
 			if (itr.second.checkPoint[DIR::DOWN])
 			{
 				_Gravity = 0;
 			}
 
 			//	アニメーションの更新
-			if (itr.second.distance.y != 0)
-			{
-				itr.second.nowAnim = AnimState::JUMP;
-			}
-			else if (itr.second.distance.x != 0)
-			{
-				itr.second.nowAnim = AnimState::RUN;
-			}
-			else
-			{
-				itr.second.nowAnim = AnimState::IDLE;
-			}
+			itr.second.nowAnim = lpAnimManager.AnimStateUpdate(itr.second);
 
 			//	移動
 			setPosition(getPosition().x + itr.second.distance.x, getPosition().y + itr.second.distance.y + _Gravity);
 
 			//	向きの更新
-			auto oldDir = itr.second.dir;
-			if (itr.second.distance.x < 0)
-			{
-				itr.second.dir = DIR::LEFT;
-			}
-			else if (itr.second.distance.x > 0)
-			{
-				itr.second.dir = DIR::RIGHT;
-			}
-
-			if (oldDir != itr.second.dir)
-			{
-				if (itr.second.dir == DIR::LEFT)
-				{
-					setFlippedX(true);
-				}
-				else if (itr.second.dir == DIR::RIGHT)
-				{
-					setFlippedX(false);
-				}
-			}
+			DirCheck()(*this, itr.second);
 
 			if (itr.second.nowAnim != itr.second.anim)
 			{

@@ -22,12 +22,6 @@ bool HitCheck::operator()(cocos2d::Sprite & sp, ActData &act)
 	if (tile != 0)
 	{
 		TRACE("‰º%d", tile);
-		//_Gravity = 0;
-		//if (!_JumpStart)
-		//{
-		//	_movePos.y = 0;
-		//	_moveFlagY = false;
-		//}
 		act.checkPoint[DIR::DOWN] = true;
 	}
 	else

@@ -22,11 +22,11 @@ void Character::SetInit(std::string ImagePass, DIR stdir, cocos2d::Vec2 pos, int
 	setPosition(cocos2d::Vec2(pos.x + sprite->getContentSize().width / 2, pos.y));
 
 	//	プラットフォームによって操作方法を変える
-	//if ((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX))
-	//{
-	//	_oprtState = new OprtKey();
-	//}
-	//else
+	if ((CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX))
+	{
+		_oprtState = new OprtKey();
+	}
+	else
 	{
 		_oprtState = new OprtTouch();
 	}
@@ -38,8 +38,6 @@ void Character::InitActData(int speed)
 {
 	//	キャラクターの情報の追加
 	_actData.speed = speed;
-	_actData.dir = DIR::RIGHT;
-	_actData.distance = cocos2d::Vec2(0, 0);
 	_actData.key[UseKey::K_LEFT] = std::make_pair(false, true);
 	_actData.key[UseKey::K_RIGHT] = std::make_pair(false, true);
 	_actData.key[UseKey::K_UP] = std::make_pair(false, true);
@@ -49,24 +47,24 @@ void Character::InitActData(int speed)
 	_actData.checkPoint[DIR::UP] = false;
 	_actData.checkPoint[DIR::DOWN] = false;
 	_actData.anim = AnimState::IDLE;
-	_charaList.insert(std::make_pair("idle", _actData));
+	_charaList.emplace(std::make_pair("idle", _actData));
 	_actData.anim = AnimState::RUN;
-	_charaList.insert(std::make_pair("run", _actData));
+	_charaList.emplace(std::make_pair("run", _actData));
 	_actData.anim = AnimState::RSHOT;
-	_charaList.insert(std::make_pair("pShot", _actData));
+	_charaList.emplace(std::make_pair("pShot", _actData));
 	_actData.anim = AnimState::SHOTUP;
-	_charaList.insert(std::make_pair("shotUp", _actData));
+	_charaList.emplace(std::make_pair("shotUp", _actData));
 	_actData.anim = AnimState::STAND;
-	_charaList.insert(std::make_pair("stand", _actData));
+	_charaList.emplace(std::make_pair("stand", _actData));
 	_actData.anim = AnimState::JUMP;
 	_actData.key[UseKey::K_DOWN].second = false;
-	_charaList.insert(std::make_pair("jump", _actData));
+	_charaList.emplace(std::make_pair("jump", _actData));
 	_actData.anim = AnimState::CLING;
-	_charaList.insert(std::make_pair("cling", _actData));
+	_charaList.emplace(std::make_pair("cling", _actData));
 	_actData.anim = AnimState::DUCK;
-	_charaList.insert(std::make_pair("duck", _actData));
+	_charaList.emplace(std::make_pair("duck", _actData));
 	_actData.anim = AnimState::HURT;
-	_charaList.insert(std::make_pair("hurt", _actData));
+	_charaList.emplace(std::make_pair("hurt", _actData));
 
 	for (auto &cList:_charaList)
 	{

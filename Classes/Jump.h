@@ -3,5 +3,5 @@
 
 struct Jump
 {
-	float operator()(cocos2d::Sprite & sp, struct ActData &act);
+	bool operator()(cocos2d::Sprite & sp, struct ActData &act);
 };

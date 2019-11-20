@@ -19,9 +19,9 @@ struct ActData
 	keyList key;																	//	どのキーを押したら処理するのか(List)
 	AnimState anim;																	//	自身のアニメーション
 	AnimState nowAnim;																//	現在のアニメーション
-	DIR dir;																		//	現在の向き
+	DIR dir = DIR::RIGHT;															//	現在の向き
 	hitList checkPoint;																//	当たり判定用
-	cocos2d::Vec2 distance;															//	移動距離
+	cocos2d::Vec2 distance = { 0,0 };												//	移動距離
 	CharaType cType;																//	キャラクターのタイプ
 };
 
