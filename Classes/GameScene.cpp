@@ -113,7 +113,7 @@ bool GameScene::init()
 	this->addChild(CharaLayer,LayerNumber::CHARA, "CharaLayer");
 
 	//	ƒ}ƒbƒv‚Ì“Ç‚İ‚İ
-	TMXTiledMap* tiledMap = TMXTiledMap::create("map/map.tmx");
+	TMXTiledMap* tiledMap = TMXTiledMap::create("map.tmx");
 	BGLayer->addChild(tiledMap,1,"stageMap");
 
 	//TMXLayer* layer = tiledMap->getLayer("layer1");

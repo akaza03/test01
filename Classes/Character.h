@@ -17,11 +17,12 @@ struct ActData
 {
 	int speed;																		//	移動スピード
 	keyList key;																	//	どのキーを押したら処理するのか(List)
-	AnimState anim;																	//	再生するアニメーション
+	AnimState anim;																	//	自身のアニメーション
+	AnimState nowAnim;																//	現在のアニメーション
+	DIR dir;																		//	現在の向き
 	hitList checkPoint;																//	当たり判定用
-	//cocos2d::Point checkPoint;
+	cocos2d::Vec2 distance;															//	移動距離
 	CharaType cType;																//	キャラクターのタイプ
-	//	次に呼ぶ関数
 };
 
 class Character
@@ -40,13 +41,12 @@ private:
 	void InitActData(int speed);													//	ActDataの初期化
 
 protected:
-	Sprite *_box;																	//	当たり判定用のBOX
 	float _Gravity;																	//	重力
 	OprtState *_oprtState;															//	操作制御
-	AnimState _state;																//	現在のアニメーション
-	AnimState _oldState;															//	1フレーム前のアニメーション
 	ActData _actData;																//	キャラクターの情報用
 	std::map<const char *,ActData> _charaList;										//	キャラクターの情報用リスト
+
+	Sprite *_box;																	//	当たり判定用のBOX
 
 	//std::list<cocos2d::EventKeyboard::KeyCode> _keyList;							//	キー用のリスト
 

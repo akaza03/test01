@@ -13,66 +13,82 @@ Player::~Player()
 
 void Player::update(float d)
 {
-	//	押されたキーのチェック
-	auto pressKey = _oprtState->GetPressKey();
-
-	//	離されたキーのチェック
-	auto releaseKey = _oprtState->GetReleaseKey();
-
 	for (auto &itr : _charaList)
 	{
-		if (_state == itr.second.anim)
+		if (itr.second.nowAnim == itr.second.anim)
 		{
-			//	そのキーが登録されていればキーを更新する
-			if (itr.second.key[pressKey].second)
+			//	キーのチェック
+			for (auto checkKey : _oprtState->GetKeyList())
 			{
-				itr.second.key[pressKey].first = true;
-			}
-			if (itr.second.key[releaseKey].second)
-			{
-				itr.second.key[releaseKey].first = false;
+				//	そのキーが登録されていればキーを更新する
+				if (itr.second.key[checkKey.first].second)
+				{
+					itr.second.key[checkKey.first].first = checkKey.second;
+				}
 			}
 
 			//	重力を加算する
 			float gy = -0.05f;
 			_Gravity += gy;
 
-			//	移動距離
-			auto distance = cocos2d::Vec2(0,0);
-
 			//	当たり判定
 			HitCheck()(*this, itr.second);
-			distance.y = Jump()(*this, itr.second);
-			
-			if(itr.second.checkPoint[DIR::DOWN])
+
+			//	移動処理
+			itr.second.distance.y = Jump()(*this, itr.second);
+			itr.second.distance.x = Move()(*this, itr.second);
+
+			//	重力を0に
+			if (itr.second.checkPoint[DIR::DOWN])
 			{
 				_Gravity = 0;
 			}
 
-			distance.x = Move()(*this, itr.second);
-
-			//	移動
-			if (distance.y != 0)
+			//	アニメーションの更新
+			if (itr.second.distance.y != 0)
 			{
-				_state = AnimState::JUMP;
+				itr.second.nowAnim = AnimState::JUMP;
 			}
-			else if (distance.x != 0)
+			else if (itr.second.distance.x != 0)
 			{
-				_state = AnimState::RUN;
+				itr.second.nowAnim = AnimState::RUN;
 			}
 			else
 			{
-				_state = AnimState::IDLE;
+				itr.second.nowAnim = AnimState::IDLE;
 			}
 
-			setPosition(getPosition().x + distance.x, getPosition().y + distance.y + _Gravity);
+			//	移動
+			setPosition(getPosition().x + itr.second.distance.x, getPosition().y + itr.second.distance.y + _Gravity);
 
-			//	アニメーションの更新
-			if (_state != _oldState)
+			//	向きの更新
+			auto oldDir = itr.second.dir;
+			if (itr.second.distance.x < 0)
+			{
+				itr.second.dir = DIR::LEFT;
+			}
+			else if (itr.second.distance.x > 0)
+			{
+				itr.second.dir = DIR::RIGHT;
+			}
+
+			if (oldDir != itr.second.dir)
+			{
+				if (itr.second.dir == DIR::LEFT)
+				{
+					setFlippedX(true);
+				}
+				else if (itr.second.dir == DIR::RIGHT)
+				{
+					setFlippedX(false);
+				}
+			}
+
+			if (itr.second.nowAnim != itr.second.anim)
 			{
 				//	次のアニメーションに現在のキー情報を渡す準備
-				char* nextKeyName;
-				switch (_state)
+				char* nextKeyName = "idle";
+				switch (itr.second.nowAnim)
 				{
 				case IDLE:
 					nextKeyName = "idle";
@@ -109,34 +125,20 @@ void Player::update(float d)
 				auto &nextKey = _charaList[nextKeyName];
 
 				//	キーの初期化
-				for (auto itrKey:UseKey())
+				for (auto itrKey : UseKey())
 				{
+					//	次のアニメーションに現在のアニメーションのキー情報を渡す
 					nextKey.key[itrKey].first = itr.second.key[itrKey].first;
+					//	今のアニメーションのキー情報を初期化
 					itr.second.key[itrKey].first = false;
 				}
-				lpAnimManager.AnimRun(this, _state, itr.second.cType);
+				//	次のアニメーションに現在のアニメーションと向きを渡す
+				nextKey.nowAnim = itr.second.nowAnim;
+				nextKey.dir = itr.second.dir;
+
+				lpAnimManager.AnimRun(this, itr.second.nowAnim, itr.second.cType);
 			}
-			_oldState = _state;
 		}
 	}
-	_oprtState->update();
-
-
-//	//	当たり判定処理
-	//CheckCol();
-//	//	重力を座標に加算する
-//	setPosition(getPosition().x, getPosition().y + _Gravity);
-//	//	デバッグ用Boxの座標設定
-//#ifdef _DEBUG
-//	_box->setTextureRect(cocos2d::Rect(getPosition().x, getPosition().y, getContentSize().width, getContentSize().height));
-//	_box->setPosition(getPosition());
-//#endif // _DEBUG
-//
-//	//	向きの更新
-//	dirUpdate();
-//	//	移動の更新
-//	moveUpdate();
-//	//	アニメーションの更新
-//	AnimStateUpdate();
 }
 

@@ -19,8 +19,11 @@
     <Filter Include="unit">
       <UniqueIdentifier>{d4a592df-3ce9-444a-aca9-d69f112d9b7d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Action">
+    <Filter Include="module">
       <UniqueIdentifier>{46160df4-f590-400e-9630-f27a0fdb3707}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manager">
+      <UniqueIdentifier>{5d7076fd-3cf0-4288-bf6c-1f29a8b90b6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -57,19 +60,21 @@
     <ClCompile Include="..\Classes\_DebugDispOut.cpp">
       <Filter>_DebugOut</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\AnimManager.cpp">
-      <Filter>Action</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\HitCheck.cpp">
-      <Filter>Action</Filter>
+      <Filter>module</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Move.cpp">
-      <Filter>Action</Filter>
+      <Filter>module</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Jump.cpp">
-      <Filter>Action</Filter>
+      <Filter>module</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\UseKey.cpp" />
+    <ClCompile Include="..\Classes\UseKey.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AnimManager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -105,24 +110,26 @@
     <ClInclude Include="..\Classes\_DebugDispOut.h">
       <Filter>_DebugOut</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AnimManager.h">
-      <Filter>Action</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\HitCheck.h">
-      <Filter>Action</Filter>
+      <Filter>module</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Move.h">
-      <Filter>Action</Filter>
+      <Filter>module</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ActSet.h">
-      <Filter>Action</Filter>
+      <Filter>module</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Jump.h">
-      <Filter>Action</Filter>
+      <Filter>module</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\UseKey.h" />
     <ClInclude Include="..\Classes\charaStruct.h">
       <Filter>unit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UseKey.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AnimManager.h">
+      <Filter>manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

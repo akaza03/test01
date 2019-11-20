@@ -18,15 +18,7 @@ class OprtKey
 public:
 	OprtKey();
 	~OprtKey();
-	cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed);								//	キャラクターではないオブジェクト用
-	cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed, Character *chara);				//	キャラクター用
+	cocos2d::EventListener* oprtInit(cocos2d::Sprite *sprite, int speed);
 	void update();
-	UseKey GetPressKey();
-	UseKey GetReleaseKey();
-
-private:
-	UseKey _pressKey;
-	UseKey _releaseKey;
-	//inputMap _input;
 };
 

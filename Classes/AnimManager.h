@@ -24,6 +24,8 @@ public:
 	cocos2d::Action* AnimationCreate(std::string plistPass, int ImageMax, float FCount, const char* ImageNameN, bool loop);
 
 	void AnimRun(cocos2d::Sprite* sprite, AnimState anim, CharaType type);		//	アニメーションの開始
+
+	void AnimStateUpdate();														//	ステート
 private:
 	AnimManager();
 	void AnimationInit();														//	アニメーションの登録用
