@@ -21,11 +21,10 @@ public:
 	}
 	~AnimManager();
 	//	コンストラクタにてアニメーションの登録
+	//	plistファイルパス,分割数,フレーム数,分割用画像名,ループするかどうか
 	cocos2d::Action* AnimationCreate(std::string plistPass, int ImageMax, float FCount, const char* ImageNameN, bool loop);
 
 	void AnimRun(cocos2d::Sprite* sprite, AnimState anim, CharaType type);		//	アニメーションの開始
-
-	AnimState AnimStateUpdate(struct ActData &act);								//	ステートのアップデート
 private:
 	AnimManager();
 	void AnimationInit();														//	アニメーションの登録用

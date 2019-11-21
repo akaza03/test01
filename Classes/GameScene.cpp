@@ -24,6 +24,7 @@
 
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"
+#include "Player.h"
 
 USING_NS_CC;
 
@@ -152,7 +153,7 @@ bool GameScene::init()
 		}
 	}
 
-	player->SetInit("image/Sprites/player/player-idle/player-idle-1.png", DIR::RIGHT, Ppos, 5, this);
+	player->SetInit("image/Sprites/player/player-idle/player-idle-1.png", DIR::RIGHT, Ppos, Vec2(5,6), this);
 	CharaLayer->addChild(player, 0);
 
 #ifdef _DEBUG

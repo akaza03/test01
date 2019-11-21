@@ -78,6 +78,15 @@
     <ClCompile Include="..\Classes\DirCheck.cpp">
       <Filter>module</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Fall.cpp">
+      <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AnimUpdate.cpp">
+      <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ActModule.cpp">
+      <Filter>module</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -135,6 +144,15 @@
       <Filter>manager</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\DirCheck.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Fall.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AnimUpdate.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ActModule.h">
       <Filter>module</Filter>
     </ClInclude>
   </ItemGroup>

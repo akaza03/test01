@@ -26,7 +26,6 @@
 #define __GAME_SCENE_H__
 
 #include "cocos2d.h"
-#include "Player.h"
 
 enum LayerNumber
 {
@@ -48,8 +47,6 @@ public:
 
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
-
-	cocos2d::Sprite *icon;
 
 private:
 	cocos2d::Layer * BGLayer;				//	バックグラウンド用レイヤー

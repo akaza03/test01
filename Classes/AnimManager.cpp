@@ -22,7 +22,7 @@ void AnimManager::AnimationInit()
 	_animMap["p_runShot"] = AnimationCreate(pass + "player-run-shot/player-run-shot.plist", 10, 0.3f, "player-run-shot-%i.png", true);
 	_animMap["p_shotUp"] = AnimationCreate(pass + "player-shoot-up/player-shoot-up.plist", 1, 1, "player-shoot-up-%i.png", true);
 	_animMap["p_stand"] = AnimationCreate(pass + "player-stand/player-stand.plist", 3, 0.5f, "player-stand-%i.png", true);
-	_animMap["p_jump"] = AnimationCreate(pass + "player-jump/player-jump.plist", 6, 0.5f, "player-jump-%i.png", true);
+	_animMap["p_jump"] = AnimationCreate(pass + "player-jump/player-jump.plist", 6, 0.2f, "player-jump-%i.png", true);
 	_animMap["p_cling"] = AnimationCreate(pass + "player-cling/player-cling.plist", 1, 1, "player-cling-%i.png", true);
 	_animMap["p_duck"] = AnimationCreate(pass + "player-duck/player-duck.plist", 1, 1, "player-duck-%i.png", true);
 	_animMap["p_hurt"] = AnimationCreate(pass + "player-hurt/player-hurt.plist", 2, 1.0f, "player-hurt-%i.png", true);
@@ -73,22 +73,6 @@ void AnimManager::AnimRun(cocos2d::Sprite * sprite, AnimState anim, CharaType ty
 	AnimCountPlus();
 }
 
-AnimState AnimManager::AnimStateUpdate(struct ActData &act)
-{
-	if (act.distance.y != 0)
-	{
-		return AnimState::JUMP;
-	}
-	else if (act.distance.x != 0)
-	{
-		return AnimState::RUN;
-	}
-	else
-	{
-		return AnimState::IDLE;
-	}
-	return AnimState::IDLE;
-}
 
 void AnimManager::AnimCountPlus()
 {
