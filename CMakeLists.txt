@@ -63,6 +63,10 @@ list(APPEND GAME_SOURCE
      Classes/Jump.cpp
      Classes/Move.cpp
      Classes/UseKey.cpp
+        Classes/DirCheck.cpp
+        Classes/Fall.cpp
+        Classes/AnimUpdate.cpp
+        Classes/ActModule.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
@@ -82,6 +86,10 @@ list(APPEND GAME_HEADER
      Classes/Jump.h
      Classes/Move.h
      Classes/UseKey.h
+        Classes/DirCheck.h
+        Classes/Fall.h
+        Classes/AnimUpdate.h
+        Classes/ActModule.h
      )
 
 if(ANDROID)

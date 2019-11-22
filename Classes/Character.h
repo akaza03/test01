@@ -25,6 +25,8 @@ struct ActData
 	hitList checkPoint;														//	当たり判定用
 	cocos2d::Vec2 distance = { 0,0 };										//	移動距離
 	bool skyflag = false;													//	空中にいるかどうかのフラグ
+	int jumpCnt = 1;														//	一度にジャンプができる回数
+	int jumpMax;															//	ジャンプ回数リセット用
 	CharaType cType;														//	キャラクターのタイプ
 };
 

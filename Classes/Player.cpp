@@ -86,6 +86,7 @@ void Player::update(float d)
 				nextKey.dir = itr.second.dir;
 				nextKey.Gravity = itr.second.Gravity;
 				nextKey.skyflag = itr.second.skyflag;
+				nextKey.jumpCnt = itr.second.jumpCnt;
 
 				lpAnimManager.AnimRun(this, itr.second.nowAnim, itr.second.cType);
 			}

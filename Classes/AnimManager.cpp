@@ -159,5 +159,5 @@ std::string AnimManager::GetAnimName(AnimState anim, CharaType type)
 	default:
 		break;
 	}
-	return "‚È‚µ";
+	return "non";
 }
