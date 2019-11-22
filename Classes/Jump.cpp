@@ -3,7 +3,7 @@
 
 bool Jump::operator()(cocos2d::Sprite & sp, ActData & act)
 {
-	if (!act.skyflag)
+	if (!act.jumpFlag)
 	{
 		act.jumpCnt = act.jumpMax;
 		act.distance.y = 0;
@@ -11,11 +11,11 @@ bool Jump::operator()(cocos2d::Sprite & sp, ActData & act)
 		//	ジャンプ開始
 		if (act.key[UseKey::K_UP].first && act.key[UseKey::K_UP].second)
 		{
-			act.skyflag = true;
+			act.jumpFlag = true;
 		}
 	}
 
-	if(act.skyflag)
+	if(act.jumpFlag)
 	{
 		//	jumpCntの数だけジャンプできるように制御
 		if (act.distance.y == 0 && act.key[UseKey::K_UP].first)

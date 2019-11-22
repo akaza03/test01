@@ -67,6 +67,7 @@ list(APPEND GAME_SOURCE
         Classes/Fall.cpp
         Classes/AnimUpdate.cpp
         Classes/ActModule.cpp
+        Classes/SetPos.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
@@ -90,6 +91,7 @@ list(APPEND GAME_HEADER
         Classes/Fall.h
         Classes/AnimUpdate.h
         Classes/ActModule.h
+        Classes/SetPos.h
      )
 
 if(ANDROID)

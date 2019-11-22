@@ -24,7 +24,7 @@ struct ActData
 	DIR dir = DIR::RIGHT;													//	現在の向き
 	hitList checkPoint;														//	当たり判定用
 	cocos2d::Vec2 distance = { 0,0 };										//	移動距離
-	bool skyflag = false;													//	空中にいるかどうかのフラグ
+	bool jumpFlag = false;													//	ジャンプ中かどうかのフラグ
 	int jumpCnt = 1;														//	一度にジャンプができる回数
 	int jumpMax;															//	ジャンプ回数リセット用
 	CharaType cType;														//	キャラクターのタイプ

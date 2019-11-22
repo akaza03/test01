@@ -87,6 +87,9 @@
     <ClCompile Include="..\Classes\ActModule.cpp">
       <Filter>module</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\SetPos.cpp">
+      <Filter>module</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -153,6 +156,9 @@
       <Filter>module</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ActModule.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SetPos.h">
       <Filter>module</Filter>
     </ClInclude>
   </ItemGroup>

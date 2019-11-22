@@ -52,7 +52,19 @@ bool HitCheck::operator()(cocos2d::Sprite & sp, ActData &act)
 	}
 	else
 	{
-		act.checkPoint[DIR::LEFT] = false;
+		LPos.y = (pos.y + sp.getContentSize().height / 3) / layerMap->getMapTileSize().height;
+
+		tile = GetTile(LPos, layerMap);
+
+		if (tile != 0)
+		{
+			TRACE("¶%d", tile);
+			act.checkPoint[DIR::LEFT] = true;
+		}
+		else
+		{
+			act.checkPoint[DIR::LEFT] = false;
+		}
 	}
 
 	//	‰E
@@ -65,7 +77,19 @@ bool HitCheck::operator()(cocos2d::Sprite & sp, ActData &act)
 	}
 	else
 	{
-		act.checkPoint[DIR::RIGHT] = false;
+		RPos.y = (pos.y + sp.getContentSize().height / 3) / layerMap->getMapTileSize().height;
+
+		tile = GetTile(RPos, layerMap);
+
+		if (tile != 0)
+		{
+			TRACE("‰E%d", tile);
+			act.checkPoint[DIR::RIGHT] = true;
+		}
+		else
+		{
+			act.checkPoint[DIR::RIGHT] = false;
+		}
 	}
 	
 	return false;
