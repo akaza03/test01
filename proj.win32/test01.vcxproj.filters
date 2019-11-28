@@ -25,6 +25,9 @@
     <Filter Include="manager">
       <UniqueIdentifier>{5d7076fd-3cf0-4288-bf6c-1f29a8b90b6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effekseer">
+      <UniqueIdentifier>{027c4bd9-f5ba-4329-965d-8bab45ef5fa8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -89,6 +92,18 @@
     </ClCompile>
     <ClCompile Include="..\Classes\SetPos.cpp">
       <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Effekseer\Effekseer.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Effekseer\EffekseerNative.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Effekseer\EffekseerRendererNative.cpp">
+      <Filter>Effekseer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AudioManager.cpp">
+      <Filter>manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +175,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\SetPos.h">
       <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Effekseer\Effekseer.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Effekseer\EffekseerNative.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Effekseer\EffekseerRendererNative.h">
+      <Filter>Effekseer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AudioManager.h">
+      <Filter>manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

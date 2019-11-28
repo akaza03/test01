@@ -63,11 +63,15 @@ list(APPEND GAME_SOURCE
      Classes/Jump.cpp
      Classes/Move.cpp
      Classes/UseKey.cpp
-        Classes/DirCheck.cpp
-        Classes/Fall.cpp
-        Classes/AnimUpdate.cpp
-        Classes/ActModule.cpp
-        Classes/SetPos.cpp
+     Classes/DirCheck.cpp
+     Classes/Fall.cpp
+     Classes/AnimUpdate.cpp
+     Classes/ActModule.cpp
+     Classes/SetPos.cpp
+     Classes/AudioManager.cpp
+     Classes/Effekseer/Effekseer.cpp
+     Classes/Effekseer/EffekseerNative.cpp
+     Classes/Effekseer/EffekseerRendererNative.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
@@ -87,11 +91,15 @@ list(APPEND GAME_HEADER
      Classes/Jump.h
      Classes/Move.h
      Classes/UseKey.h
-        Classes/DirCheck.h
-        Classes/Fall.h
-        Classes/AnimUpdate.h
-        Classes/ActModule.h
-        Classes/SetPos.h
+     Classes/DirCheck.h
+     Classes/Fall.h
+     Classes/AnimUpdate.h
+     Classes/ActModule.h
+     Classes/SetPos.h
+     Classes/AudioManager.h
+     Classes/Effekseer/Effekseer.h
+     Classes/Effekseer/EffekseerNative.h
+     Classes/Effekseer/EffekseerRendererNative.h
      )
 
 if(ANDROID)

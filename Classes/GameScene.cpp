@@ -25,6 +25,7 @@
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"
 #include "Player.h"
+#include "AudioManager.h"
 
 USING_NS_CC;
 
@@ -91,7 +92,7 @@ bool GameScene::init()
     // add a label shows "Hello World"
     // create and initialize a label
 
-    auto label = Label::createWithTTF("GameScene", "fonts/Marker Felt.ttf", 24);
+    auto label = Label::createWithTTF("1701301赤崎里駆", "fonts/Marker Felt.ttf", 24);
     if (label == nullptr)
     {
         problemLoading("'fonts/Marker Felt.ttf'");
@@ -112,6 +113,8 @@ bool GameScene::init()
 	this->addChild(BGLayer,LayerNumber::BG, "BGLayer");
 	CharaLayer = Layer::create();
 	this->addChild(CharaLayer,LayerNumber::CHARA, "CharaLayer");
+	FGLayer = Layer::create();
+	this->addChild(FGLayer, LayerNumber::FG, "FGLayer");
 
 	//	マップの読み込み
 	TMXTiledMap* tiledMap = TMXTiledMap::create("map.tmx");
@@ -156,6 +159,21 @@ bool GameScene::init()
 	player->SetInit("image/Sprites/player/player-idle/player-idle-1.png", DIR::RIGHT, Ppos, Vec2(5,5), this);
 	CharaLayer->addChild(player, 0);
 
+	//	エフェクトの設定
+	effectMng.reset(efk::EffectManager::create(Director::getInstance()->getVisibleSize()));
+	auto effect = efk::Effect::create("effect/Laser01.efk");
+
+	auto emitter = efk::EffectEmitter::create(effectMng.get());
+	emitter->setEffect(effect);
+	emitter->setPlayOnEnter(true);
+	emitter->setPosition(Vec2(300, 300));
+	emitter->setScale(20);
+	FGLayer->addChild(emitter, 0);
+
+	//	BGMの設定
+	lpAudioManager.SetStream("Resources/Audio/BGM/home.cks");
+	lpAudioManager.SetBank("Resources/Audio/SE/Sound.ckb","shot");
+
 #ifdef _DEBUG
 	//	デバッグ用レイヤーの作成
 	DBLayer = Layer::create();
@@ -168,13 +186,17 @@ bool GameScene::init()
 	DBLayer->addChild(DBBox,1,"DBBox");
 	player->SetDBBox(DBBox);
 #endif // _DEBUG
-    
 	this->scheduleUpdate();
 	return true;
 }
 
 void GameScene::update(float d)
 {
+	//	エフェクトの更新
+	(*effectMng).update();
+
+	//	Audioの更新
+	lpAudioManager.update();
 }
 
 void GameScene::menuCloseCallback(Ref* pSender)
@@ -187,3 +209,4 @@ void GameScene::menuCloseCallback(Ref* pSender)
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 }
+
